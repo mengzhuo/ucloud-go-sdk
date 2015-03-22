@@ -4,9 +4,12 @@ package ucloud
 import (
 	"bytes"
 	"crypto/sha1"
-	"encoding/json"
+	_ "encoding/json"
 	"net/http"
-	_ "reflect"
+	URL "net/url"
+	"sort"
+
+	"github.com/mengzhuo/gopystr"
 )
 
 type UcloudApiClient struct {
@@ -24,37 +27,35 @@ func NewUcloudApiClient(baseURL, publicKey, privateKey, regionId, zoneId string)
 	return &UcloudApiClient{baseURL, publicKey, privateKey, regionId, zoneId, conn}
 }
 
-func (u *UcloudApiClient) verify_ac(params interface{}) ([]byte, error) {
+func (u *UcloudApiClient) verify_ac(params map[string]interface{}) []byte {
 
 	var buf bytes.Buffer
-	b, err := json.Marshal(params)
-	if err != nil {
-		return []byte{}, err
+
+	keys := make([]string, len(params))
+	i := 0
+	for k, _ := range params {
+		keys[i] = k
 	}
-	buf.Write(b)
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		buf.WriteString(k)
+		buf.WriteString(gopystr.Str(params[k]))
+	}
 	buf.WriteString(u.privateKey)
 
 	h := sha1.New()
 
-	return h.Sum(buf.Bytes()), nil
+	return h.Sum(buf.Bytes())
 }
 
-func (u *UcloudApiClient) MakeReqParams(origin_req []byte) []byte {
+func (u *UcloudApiClient) Get(url string, params map[string]interface{}) (*http.Response, error) {
 
-	return []byte{}
-
-}
-
-func (u *UcloudApiClient) Get(url string, params interface{}) {
-
-}
-
-func (u *UcloudApiClient) Post(url string, params interface{}) {
-}
-
-func (u *UcloudApiClient) Put(url string, params interface{}) {
-
-}
-func (u *UcloudApiClient) Delete(url string, params interface{}) {
-
+	data := URL.Values{}
+	for k, v := range params {
+		data.Set(k, gopystr.Str(v))
+	}
+	data.Set("Signature", string(u.verify_ac(params)))
+	r, _ := http.NewRequest("GET", url, bytes.NewBufferString(data.Encode()))
+	return u.conn.Do(r)
 }
