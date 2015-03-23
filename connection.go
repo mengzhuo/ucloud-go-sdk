@@ -5,11 +5,10 @@ import (
 	"bytes"
 	"crypto/sha1"
 	_ "encoding/json"
+	"fmt"
 	"net/http"
 	URL "net/url"
 	"sort"
-
-	"github.com/mengzhuo/gopystr"
 )
 
 type UcloudApiClient struct {
@@ -27,35 +26,41 @@ func NewUcloudApiClient(baseURL, publicKey, privateKey, regionId, zoneId string)
 	return &UcloudApiClient{baseURL, publicKey, privateKey, regionId, zoneId, conn}
 }
 
-func (u *UcloudApiClient) verify_ac(params map[string]interface{}) []byte {
+func (u *UcloudApiClient) verify_ac(params map[string]string) []byte {
 
 	var buf bytes.Buffer
-
 	keys := make([]string, len(params))
 	i := 0
 	for k, _ := range params {
 		keys[i] = k
+		i++
 	}
 	sort.Strings(keys)
 
 	for _, k := range keys {
 		buf.WriteString(k)
-		buf.WriteString(gopystr.Str(params[k]))
+		buf.WriteString(params[k])
 	}
 	buf.WriteString(u.privateKey)
 
 	h := sha1.New()
-
-	return h.Sum(buf.Bytes())
+	h.Write(buf.Bytes())
+	return h.Sum(nil)
 }
 
-func (u *UcloudApiClient) Get(url string, params map[string]interface{}) (*http.Response, error) {
+func (u *UcloudApiClient) Get(url string, params map[string]string) (*http.Response, error) {
+
+	_params := make(map[string]string, len(params)+1)
+	for k, v := range params {
+		_params[k] = v
+	}
+	_params["PublicKey"] = u.publicKey
 
 	data := URL.Values{}
-	for k, v := range params {
-		data.Set(k, gopystr.Str(v))
+	for k, v := range _params {
+		data.Set(k, v)
 	}
-	data.Set("Signature", string(u.verify_ac(params)))
-	r, _ := http.NewRequest("GET", u.baseURL+url, bytes.NewBufferString(data.Encode()))
-	return u.conn.Do(r)
+
+	data.Set("Signature", fmt.Sprintf("%x", u.verify_ac(_params)))
+	return u.conn.Get(u.baseURL + url + "?" + data.Encode())
 }
