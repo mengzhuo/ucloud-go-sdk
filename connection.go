@@ -56,6 +56,6 @@ func (u *UcloudApiClient) Get(url string, params map[string]interface{}) (*http.
 		data.Set(k, gopystr.Str(v))
 	}
 	data.Set("Signature", string(u.verify_ac(params)))
-	r, _ := http.NewRequest("GET", url, bytes.NewBufferString(data.Encode()))
+	r, _ := http.NewRequest("GET", u.baseURL+url, bytes.NewBufferString(data.Encode()))
 	return u.conn.Do(r)
 }
