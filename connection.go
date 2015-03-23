@@ -4,8 +4,9 @@ package ucloud
 import (
 	"bytes"
 	"crypto/sha1"
-	_ "encoding/json"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	URL "net/url"
 	"sort"
@@ -48,7 +49,7 @@ func (u *UcloudApiClient) verify_ac(params map[string]string) []byte {
 	return h.Sum(nil)
 }
 
-func (u *UcloudApiClient) Get(url string, params map[string]string) (*http.Response, error) {
+func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Response, error) {
 
 	_params := make(map[string]string, len(params)+1)
 	for k, v := range params {
@@ -63,4 +64,18 @@ func (u *UcloudApiClient) Get(url string, params map[string]string) (*http.Respo
 
 	data.Set("Signature", fmt.Sprintf("%x", u.verify_ac(_params)))
 	return u.conn.Get(u.baseURL + url + "?" + data.Encode())
+}
+
+func (u *UcloudApiClient) Get(url string, params map[string]string) map[string]*json.RawMessage {
+
+	r, err := u.RawGet(url, params)
+	if err != nil {
+		panic(err)
+	}
+	defer r.Body.Close()
+	body, _ := ioutil.ReadAll(r.Body)
+
+	var rsp map[string]*json.RawMessage
+	json.Unmarshal(body, &rsp)
+	return rsp
 }
