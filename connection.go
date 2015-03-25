@@ -8,13 +8,27 @@ import (
 	"io/ioutil"
 	"net/http"
 	URL "net/url"
+	_ "reflect"
 	"sort"
 )
+
+type UResponse interface {
+	OK() bool
+	Msg() string
+}
 
 type BasicResponse struct {
 	RetCode int
 	Action  string `json:",omitempty"`
 	Message string `json:",omitempty"`
+}
+
+func (b *BasicResponse) OK() bool {
+	fmt.Println(b.RetCode)
+	return (b.RetCode == 0)
+}
+func (b *BasicResponse) Msg() string {
+	return b.Message
 }
 
 type UcloudApiClient struct {
@@ -68,7 +82,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 	return u.conn.Get(u.baseURL + url + "?" + data.Encode())
 }
 
-func (u *UcloudApiClient) Get(params map[string]string) BasicResponse {
+func (u *UcloudApiClient) Get(params map[string]string, rsp interface{}) {
 
 	r, err := u.RawGet("/", params)
 	if err != nil {
@@ -76,8 +90,9 @@ func (u *UcloudApiClient) Get(params map[string]string) BasicResponse {
 	}
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
+	fmt.Printf("Body:%s\n", body)
 
-	var rsp BasicResponse
-	json.Unmarshal(body, &rsp)
-	return rsp
+	fmt.Println("Value :", rsp)
+	json.Unmarshal(body, rsp)
+	fmt.Println("Value :", rsp)
 }
