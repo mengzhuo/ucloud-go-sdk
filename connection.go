@@ -17,17 +17,17 @@ type UResponse interface {
 	Msg() string
 }
 
-type BasicResponse struct {
+type BaseResponse struct {
 	RetCode int
 	Action  string `json:",omitempty"`
 	Message string `json:",omitempty"`
 }
 
-func (b *BasicResponse) OK() bool {
+func (b *BaseResponse) OK() bool {
 	fmt.Println(b.RetCode)
 	return (b.RetCode == 0)
 }
-func (b *BasicResponse) Msg() string {
+func (b *BaseResponse) Msg() string {
 	return b.Message
 }
 
@@ -79,20 +79,19 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 	sig := fmt.Sprintf("%x", u.verify_ac(s))
 
 	data.Set("Signature", sig)
-	return u.conn.Get(u.baseURL + url + "?" + data.Encode())
+	uri := u.baseURL + url + "?" + data.Encode()
+	return u.conn.Get(uri)
 }
 
-func (u *UcloudApiClient) Get(params map[string]string, rsp interface{}) {
+func (u *UcloudApiClient) Get(params map[string]string, rsp interface{}) error {
 
 	r, err := u.RawGet("/", params)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
-	fmt.Printf("Body:%s\n", body)
-
-	fmt.Println("Value :", rsp)
+	fmt.Printf("%s", body)
 	json.Unmarshal(body, rsp)
-	fmt.Println("Value :", rsp)
+	return nil
 }

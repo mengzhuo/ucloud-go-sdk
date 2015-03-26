@@ -6,10 +6,10 @@ import (
 )
 
 type SendSmsResponse struct {
-	*BasicResponse
+	*BaseResponse
 }
 
-func (c *UcloudApiClient) SendSms(content string, phones []string) *SendSmsResponse {
+func (c *UcloudApiClient) SendSms(content string, phones []string) (*SendSmsResponse, error) {
 
 	params := make(map[string]string)
 	params["Action"] = "SendSms"
@@ -18,6 +18,6 @@ func (c *UcloudApiClient) SendSms(content string, phones []string) *SendSmsRespo
 		params[fmt.Sprintf("Phone.%d", i)] = p
 	}
 	rsp := &SendSmsResponse{}
-	c.Get(params, rsp)
-	return rsp
+	err := c.Get(params, rsp)
+	return rsp, err
 }
