@@ -115,11 +115,12 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 
 		name := typ.Field(i).Name
 		tag := typ.Field(i).Tag.Get("ucloud")
+		field := v.Field(i)
 		// Check if parameter is optional, now we only had optional
-		if tag == "optional" && v.Field(i).IsNil() {
+		if tag == "optional" && field.IsNil() {
 			continue
 		}
-		field := v.Field(i)
+
 		switch field.Kind() {
 		case reflect.Slice:
 			for j := 0; j < field.Len(); j++ {
