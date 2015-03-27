@@ -26,26 +26,25 @@ type CreateUHostInstanceResponse struct {
 	UHostIds []string `json:",omitempty"`
 }
 
-func (u *UcloudApiClient) CreateUHostInstance(Region string, ImageId string, LoginMode string,
-	Password string, CPU int, Memory int, DiskSpace int, Name string, NetworkId string,
-	SecurityGroupId string, ChargeType string, Quantity int) (rsp *CreateUHostInstanceResponse, err error) {
+type CreateUHostInstance struct {
+	Region          string
+	ImageId         string
+	LoginMode       string
+	Password        string
+	CPU             int
+	Memory          int
+	DiskSpace       int
+	Name            string
+	NetworkId       string
+	SecurityGroupId string
+	ChargeType      string
+	Quantity        int
+}
 
-	err = u.Get(map[string]string{
-		"Action":          "CreateUHostInstance",
-		"Region":          Region,
-		"ImageId":         ImageId,
-		"LoginMode":       LoginMode,
-		"Password":        Password,
-		"CPU":             string(CPU),
-		"Memory":          string(Memory),
-		"DiskSpace":       string(DiskSpace),
-		"Name":            Name,
-		"NetworkId":       NetworkId,
-		"SecurityGroupId": SecurityGroupId,
-		"ChargeType":      ChargeType,
-		"Quantity":        string(Quantity)}, &rsp)
+func (r *CreateUHostInstance) R() (rsp *CreateUHostInstanceResponse) {
 	return
 }
+
 func (u *UcloudApiClient) DescribeUHostInstance() (rsp *DescribeUHostInstanceResponse, err error) {
 	return
 }
