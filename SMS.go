@@ -10,6 +10,6 @@ type SendSms struct {
 	Phone   []string
 }
 
-func (r *SendSms) R() (rsp *SendSmsResponse) {
-	return
+func (r *SendSms) R() *SendSmsResponse {
+	return &SendSmsResponse{}
 }

@@ -21,7 +21,6 @@ type URequest interface {
 
 type UResponse interface {
 	OK() bool
-	Msg() string
 }
 
 type BaseResponse struct {
@@ -31,11 +30,7 @@ type BaseResponse struct {
 }
 
 func (b *BaseResponse) OK() bool {
-	fmt.Println(b.RetCode)
 	return (b.RetCode == 0)
-}
-func (b *BaseResponse) Msg() string {
-	return b.Message
 }
 
 type UcloudApiClient struct {
