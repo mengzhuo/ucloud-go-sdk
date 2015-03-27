@@ -14,13 +14,13 @@ import (
 	"strings"
 )
 
-type URequest interface {
-	// This should return new instance for json Unmarshal
-	R() *UResponse
-}
-
 type UResponse interface {
 	OK() bool
+}
+
+type URequest interface {
+	// This should return new instance for json Unmarshal
+	R() UResponse
 }
 
 type BaseResponse struct {
@@ -85,7 +85,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 	return u.conn.Get(uri)
 }
 
-func (u *UcloudApiClient) Get(params map[string]string, rsp *UResponse) error {
+func (u *UcloudApiClient) Get(params map[string]string, rsp UResponse) error {
 
 	r, err := u.RawGet("/", params)
 	if err != nil {
@@ -94,15 +94,20 @@ func (u *UcloudApiClient) Get(params map[string]string, rsp *UResponse) error {
 	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
 	//fmt.Printf("%s", body)
-	json.Unmarshal(body, rsp)
+	json.Unmarshal(body, &rsp)
 	return nil
 }
 
-func (u *UcloudApiClient) Do(request URequest) (rsp *UResponse, err error) {
+func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 
-	rsp = request.R()
-	typ := reflect.TypeOf(request)
+	rsp := request.R()
 	v := reflect.ValueOf(request)
+	typ := reflect.TypeOf(request)
+
+	if typ.Kind() == reflect.Ptr {
+		v = v.Elem()
+		typ = typ.Elem()
+	}
 
 	params := make(map[string]string, 0) // it's 0 for optional might skip
 
@@ -114,17 +119,17 @@ func (u *UcloudApiClient) Do(request URequest) (rsp *UResponse, err error) {
 		if tag == "optional" && v.Field(i).IsNil() {
 			continue
 		}
-
-		switch v.Field(i).Kind() {
+		field := v.Field(i)
+		switch field.Kind() {
 		case reflect.Slice:
-			for j := 0; j < v.Len(); j++ {
+			for j := 0; j < field.Len(); j++ {
 				// Must be string in Slice
-				params[fmt.Sprintf("%s.%d", name, j)] = v.Index(j).String()
+				params[fmt.Sprintf("%s.%d", name, j)] = field.Index(j).String()
 			}
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			params[name] = strconv.FormatInt(v.Int(), 10)
+			params[name] = strconv.FormatInt(field.Int(), 10)
 		case reflect.String:
-			params[name] = v.String()
+			params[name] = field.String()
 		}
 	}
 	//XXX Set Action Name
@@ -133,7 +138,7 @@ func (u *UcloudApiClient) Do(request URequest) (rsp *UResponse, err error) {
 	params["Action"] = typ_name
 
 	// OK, now we had params
-	err = u.Get(params, rsp)
+	err := u.Get(params, rsp)
 
-	return
+	return rsp, err
 }

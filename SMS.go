@@ -2,7 +2,7 @@
 package ucloud
 
 type SendSmsResponse struct {
-	*BaseResponse
+	BaseResponse
 }
 
 type SendSms struct {
@@ -10,6 +10,6 @@ type SendSms struct {
 	Phone   []string
 }
 
-func (r *SendSms) R() *SendSmsResponse {
+func (r *SendSms) R() UResponse {
 	return &SendSmsResponse{}
 }
