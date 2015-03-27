@@ -5,9 +5,9 @@ type GetMetric struct {
 	MetricName   []string
 	ResourceId   string
 	ResourceType string
-	TimeRange    int `uapi:"optional"`
-	BeginTime    int `uapi:"optional"`
-	EndTime      int `uapi:"optional"`
+	TimeRange    int `ucloud:"optional"`
+	BeginTime    int `ucloud:"optional"`
+	EndTime      int `ucloud:"optional"`
 }
 
 type GetMetricItem struct {
@@ -16,18 +16,10 @@ type GetMetricItem struct {
 }
 
 type GetMetricResponse struct {
-	*BaseResponse
+	BaseResponse
 	DataSets map[string]*GetMetricItem
 }
 
-func (r *GetMetric) R() *GetMetricResponse {
+func (r *GetMetric) R() UResponse {
 	return &GetMetricResponse{}
 }
-
-/*
-
-rsp, err := u.Do(&GetMetric{})
-if err != nil {
-	//bla bla
-}
-*/
