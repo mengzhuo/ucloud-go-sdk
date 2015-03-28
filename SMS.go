@@ -13,3 +13,7 @@ type SendSms struct {
 func (r *SendSms) R() UResponse {
 	return &SendSmsResponse{}
 }
+
+func (r *SendSmsResponse) Data() interface{} {
+	return r.OK()
+}

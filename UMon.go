@@ -13,11 +13,16 @@ type GetMetric struct {
 type GetMetricItem struct {
 	Timestamp int
 	Value     float64
+	IP        string `json:",omitempty"`
 }
 
 type GetMetricResponse struct {
 	BaseResponse
 	DataSets map[string]*GetMetricItem
+}
+
+func (r *GetMetricResponse) Data() interface{} {
+	return r.DataSets
 }
 
 func (r *GetMetric) R() UResponse {

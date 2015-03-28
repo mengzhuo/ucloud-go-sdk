@@ -16,6 +16,7 @@ import (
 
 type UResponse interface {
 	OK() bool
+	Data() interface{}
 }
 
 type URequest interface {
@@ -82,6 +83,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 
 	data.Set("Signature", sig)
 	uri := u.baseURL + url + "?" + data.Encode()
+	//fmt.Println(uri)
 	return u.conn.Get(uri)
 }
 
@@ -119,8 +121,12 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 
 		switch field.Kind() {
 		case reflect.Slice:
-			if tag == "optional" && field.IsNil() {
-				continue
+			if field.IsNil() {
+				if tag == "optional" {
+					continue
+				} else {
+					return nil, fmt.Errorf("Lack of parameter:%s", name)
+				}
 			}
 			for j := 0; j < field.Len(); j++ {
 				// Must be string in Slice
@@ -128,16 +134,31 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 			}
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			num := field.Int()
-			if tag == "optional" && num == 0 {
+			if num == 0 && tag == "optional" {
 				continue
 			}
+			/*
+				FIXME How can we tell that if user JUST need 0 value?
+					if num == 0 {
+						if tag == "optional" {
+							continue
+						} else {
+							return nil, fmt.Errorf("Lack of parameter:%s", name)
+						}
+					}*/
 			params[name] = strconv.FormatInt(num, 10)
 		case reflect.String:
 			str := field.String()
-			if tag == "optional" && str == "" {
-				continue
+
+			if str == "" {
+				if tag == "optional" {
+					continue
+				} else {
+					return nil, fmt.Errorf("Lack of parameter:%s", name)
+				}
 			}
-			params[name] = field.String()
+
+			params[name] = str
 		}
 	}
 	//XXX Set Action Name
