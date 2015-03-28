@@ -83,7 +83,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 
 	data.Set("Signature", sig)
 	uri := u.baseURL + url + "?" + data.Encode()
-	//fmt.Println(uri)
+	fmt.Println(uri)
 	return u.conn.Get(uri)
 }
 
