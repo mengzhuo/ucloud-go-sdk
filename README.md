@@ -4,6 +4,7 @@ Ucloud API 的 go语言SDK
 
 ## 安装
     go get gitcafe.com/mengzhuo/ucloud-go-sdk
+    // Or..
     go get github.com/mengzhuo/ucloud-go-sdk
 
 ## 使用例子
