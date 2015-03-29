@@ -1,4 +1,3 @@
-// Package main provides ...
 package ucloud
 
 type SendSmsResponse struct {
