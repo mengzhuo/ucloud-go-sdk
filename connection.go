@@ -83,7 +83,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 
 	data.Set("Signature", sig)
 	uri := u.baseURL + url + "?" + data.Encode()
-	fmt.Println(uri)
+	//fmt.Println(uri)
 	return u.conn.Get(uri)
 }
 
@@ -138,7 +138,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 				continue
 			}
 			/*
-				FIXME How can we tell that if user JUST need 0 value?
+				XXX How can we tell that if user JUST need 0 value?
 					if num == 0 {
 						if tag == "optional" {
 							continue
@@ -156,7 +156,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 		case reflect.Bool:
 			b := field.Bool()
 			if !b && tag == "optional" {
-				continue // FIXME Boolean act like should be skip?
+				continue // XXX Boolean act like should be skip?
 			}
 			bt := "False"
 			if b {
@@ -177,7 +177,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 			params[name] = str
 		}
 	}
-	//XXX Set Action Name
+	//XXX Set Action Name should be more elegent
 	typ_name_list := strings.Split(typ.String(), ".")
 	typ_name := typ_name_list[len(typ_name_list)-1]
 	params["Action"] = typ_name
