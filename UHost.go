@@ -443,8 +443,28 @@ func (r *AttachUdisk) R() UResponse {
 }
 
 // DetachUdisk ----------
-type DetachUdiskResponse struct{ BaseResponse }
-type DetachUdisk struct{}
+func (r *DetachUdiskResponse) Data() interface{} {
+	return struct {
+		UhostId string //卸载的UHost实例ID
+		UDiskId string //卸载的UDisk实例ID
+	}{r.UhostId, r.UDiskId}
+}
+
+type DetachUdiskResponse struct {
+	BaseResponse
+	UhostId string //卸载的UHost实例ID
+	UDiskId string //卸载的UDisk实例ID
+}
+
+func (r *DetachUdisk) R() UResponse {
+	return &DetachUdiskResponse{}
+}
+
+type DetachUdisk struct {
+	Region  string //	数据中心，参见 数据中心列表	Yes
+	UHostId string //	UHost实例ID	Yes
+	UDiskId string //	需要卸载的UDisk实例ID	Yes
+}
 
 // CreateUHostInstanceSnapshot --------------
 type CreateUHostInstanceSnapshotResponse struct{ BaseResponse }

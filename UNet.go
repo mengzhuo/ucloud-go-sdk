@@ -245,7 +245,7 @@ type DescribeVipResponse struct {
 }
 
 func (r *DescribeVipResponse) Data() interface{} {
-	return
+	return r.DataSet
 }
 
 type DescribeVip struct {
@@ -264,7 +264,7 @@ type ReleaseVipResponse struct {
 }
 
 func (r *ReleaseVipResponse) Data() interface{} {
-	return
+	return r.RetCode
 }
 
 type ReleaseVip struct {
@@ -300,7 +300,7 @@ type DescribeSecurityGroupResponse struct {
 }
 
 func (r *DescribeSecurityGroupResponse) Data() interface{} {
-	return
+	return r.DataSet
 }
 
 type DescribeSecurityGroup struct {
@@ -324,7 +324,7 @@ type DescribeSecurityGroupResourceResponse struct {
 }
 
 func (r *DescribeSecurityGroupResourceResponse) Data() interface{} {
-	return
+	return r.DataSet
 }
 
 type DescribeSecurityGroupResource struct {
@@ -344,7 +344,7 @@ type CreateSecurityGroupResponse struct {
 }
 
 func (r *CreateSecurityGroupResponse) Data() interface{} {
-	return
+	return r.RetCode
 }
 
 type CreateSecurityGroup struct {
@@ -371,7 +371,7 @@ type UpdateSecurityGroupResponse struct {
 }
 
 func (r *UpdateSecurityGroupResponse) Data() interface{} {
-	return
+	return r.RetCode
 }
 
 type UpdateSecurityGroup struct {
