@@ -147,6 +147,22 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 						}
 					}*/
 			params[name] = strconv.FormatInt(num, 10)
+		case reflect.Float32, reflect.Float64:
+			num := field.Float()
+			if num == 0.0 && tag == "optional" {
+				continue
+			}
+			params[name] = fmt.Sprintf("%v", num) // FIXME: float don't act like python
+		case reflect.Bool:
+			b := field.Bool()
+			if !b && tag == "optional" {
+				continue // FIXME Boolean act like should be skip?
+			}
+			bt := "False"
+			if b {
+				bt = "True"
+			}
+			params[name] = bt
 		case reflect.String:
 			str := field.String()
 
