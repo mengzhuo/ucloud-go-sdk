@@ -470,15 +470,15 @@ type DetachUdisk struct {
 
 type CreateUhostInstanceSnapshotResponse struct {
 	BaseResponse
-	UhostId      string `json:"omitempty"` // UHost实例ID
-	SnapshotName string `json:"omitempty"` // 快照名称
+	UhostId      string `json:",omitempty"` // UHost实例ID
+	SnapshotName string `json:",omitempty"` // 快照名称
 
 }
 
 func (r *CreateUhostInstanceSnapshotResponse) Data() interface{} {
 	return struct {
-		UhostId      string `json:"omitempty"` // UHost实例ID
-		SnapshotName string `json:"omitempty"` // 快照名称
+		UhostId      string `json:",omitempty"` // UHost实例ID
+		SnapshotName string `json:",omitempty"` // 快照名称
 	}{r.UhostId, r.SnapshotName}
 }
 
@@ -499,15 +499,15 @@ type SnapshotSet struct {
 
 type DescribeUhostInstanceSnapshotResponse struct {
 	BaseResponse
-	UhostId     string         `json:"omitempty"` // UHost实例ID
-	SnapshotSet []*SnapshotSet `json:"omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
+	UhostId     string         `json:",omitempty"` // UHost实例ID
+	SnapshotSet []*SnapshotSet `json:",omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
 
 }
 
 func (r *DescribeUhostInstanceSnapshotResponse) Data() interface{} {
 	return struct {
-		UhostId     string         `json:"omitempty"` // UHost实例ID
-		SnapshotSet []*SnapshotSet `json:"omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
+		UhostId     string         `json:",omitempty"` // UHost实例ID
+		SnapshotSet []*SnapshotSet `json:",omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
 	}{r.UhostId, r.SnapshotSet}
 }
 

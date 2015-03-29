@@ -4,7 +4,7 @@ package ucloud
 
 type CreateUlbResponse struct {
 	BaseResponse
-	ULBId string `json:"omitempty"` // 负载均衡实例的Id
+	ULBId string `json:",omitempty"` // 负载均衡实例的Id
 
 }
 
@@ -86,8 +86,8 @@ type BackendSet struct {
 
 type DescribeUlbResponse struct {
 	BaseResponse
-	TotalCount int                  `json:"omitempty"` // 满足条件的负载均衡实例的总数
-	DataSet    []*DescribUlbDataSet `json:"omitempty"` // 负载均衡实例列表，具体结构见下方DataSet
+	TotalCount int                  `json:",omitempty"` // 满足条件的负载均衡实例的总数
+	DataSet    []*DescribUlbDataSet `json:",omitempty"` // 负载均衡实例列表，具体结构见下方DataSet
 
 }
 
@@ -132,7 +132,7 @@ func (r *UpdateUlbAttribute) R() UResponse {
 
 type CreateVserverResponse struct {
 	BaseResponse
-	VServerId string `json:"omitempty"` // VServer实例的Id
+	VServerId string `json:",omitempty"` // VServer实例的Id
 
 }
 
@@ -209,7 +209,7 @@ func (r *UpdateVserverAttribute) R() UResponse {
 
 type AllocateBackendResponse struct {
 	BaseResponse
-	BackendId string `json:"omitempty"` // 所添加的后端资源ID，（为ULB系统中使用，与资源自身ID无关）
+	BackendId string `json:",omitempty"` // 所添加的后端资源ID，（为ULB系统中使用，与资源自身ID无关）
 
 }
 
@@ -280,7 +280,7 @@ func (r *UpdateBackendAttribute) R() UResponse {
 
 type CreateSslResponse struct {
 	BaseResponse
-	ULBId string `json:"omitempty"` // SSL证书的Id
+	ULBId string `json:",omitempty"` // SSL证书的Id
 
 }
 
@@ -324,7 +324,7 @@ func (r *DeleteSsl) R() UResponse {
 
 type BindSslResponse struct {
 	BaseResponse
-	ULBId string `json:"omitempty"` // SSL证书的Id
+	ULBId string `json:",omitempty"` // SSL证书的Id
 
 }
 
@@ -357,8 +357,8 @@ type DescribeSslDataSet struct {
 
 type DescribeSslResponse struct {
 	BaseResponse
-	TotalCOunt string                `json:"omitempty"` // 满足条件的SSL证书总数
-	DataSet    []*DescribeSslDataSet `json:"omitempty"` // SSL证书详细信息，具体结构见DataSet
+	TotalCOunt string                `json:",omitempty"` // 满足条件的SSL证书总数
+	DataSet    []*DescribeSslDataSet `json:",omitempty"` // SSL证书详细信息，具体结构见DataSet
 
 }
 
@@ -382,7 +382,7 @@ func (r *DescribeSsl) R() UResponse {
 
 type CreatePolicyGroupResponse struct {
 	BaseResponse
-	GroupId string `json:"omitempty"` // 内容转发策略组的Id
+	GroupId string `json:",omitempty"` // 内容转发策略组的Id
 
 }
 
@@ -441,7 +441,7 @@ type DescribePolicyGroupBackendSet struct {
 
 type DescribePolicyGroupResponse struct {
 	BaseResponse
-	DataSet []*DescribePolicyGroupDataSet `json:"omitempty"` // 内容转发策略组列表，具体结构见DataSet
+	DataSet []*DescribePolicyGroupDataSet `json:",omitempty"` // 内容转发策略组列表，具体结构见DataSet
 
 }
 
@@ -486,7 +486,7 @@ func (r *UpdatePolicyGroupAttribute) R() UResponse {
 
 type CreatePolicyResponse struct {
 	BaseResponse
-	PolicyId string `json:"omitempty"` // 内容转发策略ID
+	PolicyId string `json:",omitempty"` // 内容转发策略ID
 
 }
 

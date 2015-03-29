@@ -48,7 +48,7 @@ func (r *ClearUdbLog) R() UResponse {
 
 type CreateUdbInstanceResponse struct {
 	BaseResponse
-	DBId string `json:"omitempty"` // db实例id
+	DBId string `json:",omitempty"` // db实例id
 
 }
 
@@ -85,7 +85,7 @@ func (r *CreateUdbInstance) R() UResponse {
 
 type CreateUdbParamGroupResponse struct {
 	BaseResponse
-	GroupId int `json:"omitempty"` // 新配置参数组id
+	GroupId int `json:",omitempty"` // 新配置参数组id
 
 }
 
@@ -110,7 +110,7 @@ func (r *CreateUdbParamGroup) R() UResponse {
 
 type CreateUdbReplicationInstanceResponse struct {
 	BaseResponse
-	DBId string `json:"omitempty"` // 创建从节点的DBId
+	DBId string `json:",omitempty"` // 创建从节点的DBId
 
 }
 
@@ -136,7 +136,7 @@ func (r *CreateUdbReplicationInstance) R() UResponse {
 
 type CreateUdbSlaveResponse struct {
 	BaseResponse
-	DBId string `json:"omitempty"` // 创建slave的DBId
+	DBId string `json:",omitempty"` // 创建slave的DBId
 
 }
 
@@ -223,7 +223,7 @@ func (r *DeleteUdbParamGroup) R() UResponse {
 
 type DescribeUdbBackupBlacklistResponse struct {
 	BaseResponse
-	Blacklist string `json:"omitempty"` // 黑名单
+	Blacklist string `json:",omitempty"` // 黑名单
 
 }
 
@@ -255,8 +255,8 @@ type DescribeUdbBackupDataSet struct {
 
 type DescribeUdbBackupResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbBackupDataSet `json:"omitempty"` // 备份信息
-	TotalCount int                         `json:"omitempty"` // 备份总数，如果指定dbid，则是该db备份总数
+	DataSet    []*DescribeUdbBackupDataSet `json:",omitempty"` // 备份信息
+	TotalCount int                         `json:",omitempty"` // 备份总数，如果指定dbid，则是该db备份总数
 
 }
 
@@ -287,7 +287,7 @@ type DescribeUdbInstancePriceDataSet struct {
 
 type DescribeUdbInstancePriceResponse struct {
 	BaseResponse
-	DataSet []*DescribeUdbInstancePriceDataSet `json:"omitempty"` // 价格
+	DataSet []*DescribeUdbInstancePriceDataSet `json:",omitempty"` // 价格
 
 }
 
@@ -343,8 +343,8 @@ type DescribeUdbInstanceDataSet struct {
 
 type DescribeUdbInstanceResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbInstanceDataSet `json:"omitempty"` // DB实例信息列表
-	TotalCount int                           `json:"omitempty"` // 用户db组的数量，对于mysql: 主从结对数量，没有slave，则只有master mongodb: 副本集数量
+	DataSet    []*DescribeUdbInstanceDataSet `json:",omitempty"` // DB实例信息列表
+	TotalCount int                           `json:",omitempty"` // 用户db组的数量，对于mysql: 主从结对数量，没有slave，则只有master mongodb: 副本集数量
 
 }
 
@@ -369,7 +369,7 @@ func (r *DescribeUdbInstance) R() UResponse {
 
 type DescribeUdbInstanceStateResponse struct {
 	BaseResponse
-	State string `json:"omitempty"` // DB状态标记 Init          // 初始化中 Fail              // 安装失败 Starting          // 启动中 Running           // 运行 Shutdown          // 关闭中 Shutoff           // 已关闭 Delete            // 已删除 Upgrading         // 升级中 Promoting         // 提升为独库进行中 Recovering        // 恢复中 Recover    fail   // 恢复失败
+	State string `json:",omitempty"` // DB状态标记 Init          // 初始化中 Fail              // 安装失败 Starting          // 启动中 Running           // 运行 Shutdown          // 关闭中 Shutoff           // 已关闭 Delete            // 已删除 Upgrading         // 升级中 Promoting         // 提升为独库进行中 Recovering        // 恢复中 Recover    fail   // 恢复失败
 }
 
 func (r *DescribeUdbInstanceStateResponse) Data() interface{} {
@@ -407,8 +407,8 @@ type ParamMember struct {
 
 type DescribeUdbParamGroupResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbParamGroupDataSet `json:"omitempty"` // 参数组
-	TotalCount int                             `json:"omitempty"` // 参数组总数，列表操作时才会有该参数
+	DataSet    []*DescribeUdbParamGroupDataSet `json:",omitempty"` // 参数组
+	TotalCount int                             `json:",omitempty"` // 参数组总数，列表操作时才会有该参数
 
 }
 
@@ -435,7 +435,7 @@ type DescribeUdbTypeDataSet struct {
 
 type DescribeUdbTypeResponse struct {
 	BaseResponse
-	DataSet []*DescribeUdbTypeDataSet `json:"omitempty"` // DB类型列表
+	DataSet []*DescribeUdbTypeDataSet `json:",omitempty"` // DB类型列表
 
 }
 
@@ -601,7 +601,7 @@ func (r *UpdateUdbParamGroup) R() UResponse {
 
 type UploadUdbParamGroupResponse struct {
 	BaseResponse
-	GroupId int `json:"omitempty"` // 配置参数组id
+	GroupId int `json:",omitempty"` // 配置参数组id
 
 }
 

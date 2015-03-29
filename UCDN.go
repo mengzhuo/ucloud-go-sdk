@@ -30,7 +30,7 @@ type TrafficSet struct {
 
 type GetUcdnTrafficResponse struct {
 	BaseResponse
-	TrafficSet []*TrafficSet `json:"omitempty"` // 用户不同区域的流量信息, 具体结构参见TrafficSet部分
+	TrafficSet []*TrafficSet `json:",omitempty"` // 用户不同区域的流量信息, 具体结构参见TrafficSet部分
 
 }
 
@@ -49,7 +49,7 @@ func (r *GetUcdnTraffic) R() UResponse {
 
 type CreateUcdnDomainResponse struct {
 	BaseResponse
-	DomainId string `json:"omitempty"` // 创建域名对应的域名ID，后续获取域名相关数据的操作均需要使用该ID
+	DomainId string `json:",omitempty"` // 创建域名对应的域名ID，后续获取域名相关数据的操作均需要使用该ID
 
 }
 
@@ -126,8 +126,8 @@ type DomainSet struct {
 
 type DescribeUcdnDomainResponse struct {
 	BaseResponse
-	TotalCount int          `json:"omitempty"` // 满足条件的条目数
-	DomainSet  []*DomainSet `json:"omitempty"` // 获取的域名信息，具体结构见 DomainSet
+	TotalCount int          `json:",omitempty"` // 满足条件的条目数
+	DomainSet  []*DomainSet `json:",omitempty"` // 获取的域名信息，具体结构见 DomainSet
 
 }
 
@@ -154,8 +154,8 @@ type BandwidthSet struct {
 
 type GetUcdnDomainBandwidthResponse struct {
 	BaseResponse
-	Traffic      float64         `json:"omitempty"` // 从起始时间到结束时间内所使用的带宽总量，单位GB
-	BandWidthSet []*BandwidthSet `json:"omitempty"` // 带宽流量实例表，具体结构见 BandwidthSet
+	Traffic      float64         `json:",omitempty"` // 从起始时间到结束时间内所使用的带宽总量，单位GB
+	BandWidthSet []*BandwidthSet `json:",omitempty"` // 带宽流量实例表，具体结构见 BandwidthSet
 
 }
 
@@ -184,7 +184,7 @@ type GetUcdnDomainTrafficSet struct {
 
 type GetUcdnDomainTrafficResponse struct {
 	BaseResponse
-	TrafficSet []*GetUcdnDomainTrafficSet `json:"omitempty"` // 流量实例表，具体结构见 TrafficSet
+	TrafficSet []*GetUcdnDomainTrafficSet `json:",omitempty"` // 流量实例表，具体结构见 TrafficSet
 
 }
 
@@ -212,7 +212,7 @@ type LogSet struct {
 
 type GetUcdnDomainLogResponse struct {
 	BaseResponse
-	LogSet []*LogSet `json:"omitempty"` // 流量实例表，具体结构见 LogSet
+	LogSet []*LogSet `json:",omitempty"` // 流量实例表，具体结构见 LogSet
 
 }
 
@@ -264,8 +264,8 @@ type TaskSet struct {
 
 type DescribeRefreshCacheTaskResponse struct {
 	BaseResponse
-	TotalCount string     `json:"omitempty"` // 返回总条目数
-	TaskSet    []*TaskSet `json:"omitempty"` // 刷新任务信息，具体结构见 TaskSet
+	TotalCount string     `json:",omitempty"` // 返回总条目数
+	TaskSet    []*TaskSet `json:",omitempty"` // 刷新任务信息，具体结构见 TaskSet
 
 }
 
@@ -320,8 +320,8 @@ type DescribePrefetchCacheTaskSet struct {
 
 type DescribePrefetchCacheTaskResponse struct {
 	BaseResponse
-	TotalCount string                          `json:"omitempty"` // 返回总条目数
-	TaskSet    []*DescribePrefetchCacheTaskSet `json:"omitempty"` // 预取任务信息，具体结构见 TaskSet
+	TotalCount string                          `json:",omitempty"` // 返回总条目数
+	TaskSet    []*DescribePrefetchCacheTaskSet `json:",omitempty"` // 预取任务信息，具体结构见 TaskSet
 
 }
 
@@ -367,7 +367,7 @@ func (r *UpdateUcdnDomainStatus) R() UResponse {
 
 type GetUcdnDomainPrefetchEnableResponse struct {
 	BaseResponse
-	Enable int `json:"omitempty"` // 0表示该域名未开启预取，1表示该域名已开启预取
+	Enable int `json:",omitempty"` // 0表示该域名未开启预取，1表示该域名已开启预取
 
 }
 

@@ -12,7 +12,7 @@ type EIPAddr struct {
 
 type AllocateEipResponse struct {
 	BaseResponse
-	EIPSet []*EIPSet `json:"omitempty"` // 申请到的EIP资源详情
+	EIPSet []*EIPSet `json:",omitempty"` // 申请到的EIP资源详情
 
 }
 
@@ -58,8 +58,8 @@ type DescribeEIPAddr struct {
 
 type DescribeEipResponse struct {
 	BaseResponse
-	TotalCount int               `json:"omitempty"` // 满足条件的弹性IP总数
-	EIPSet     []*DescribeEIPSet `json:"omitempty"` // 弹性IP列表，每项参数详见DataSet
+	TotalCount int               `json:",omitempty"` // 满足条件的弹性IP总数
+	EIPSet     []*DescribeEIPSet `json:",omitempty"` // 弹性IP列表，每项参数详见DataSet
 
 }
 
@@ -194,7 +194,7 @@ type GetEipPriceSet struct {
 
 type GetEipPriceResponse struct {
 	BaseResponse
-	PriceSet []*GetEipPriceSet `json:"omitempty"` // 弹性IP价格详情
+	PriceSet []*GetEipPriceSet `json:",omitempty"` // 弹性IP价格详情
 
 }
 
@@ -218,7 +218,7 @@ func (r *GetEipPrice) R() UResponse {
 
 type AllocateVipResponse struct {
 	BaseResponse
-	DataSet []string `json:"omitempty"` // 申请到的VIP资源地址
+	DataSet []string `json:",omitempty"` // 申请到的VIP资源地址
 
 }
 
@@ -240,7 +240,7 @@ func (r *AllocateVip) R() UResponse {
 
 type DescribeVipResponse struct {
 	BaseResponse
-	DataSet []string `json:"omitempty"` // 内网VIP地址列表
+	DataSet []string `json:",omitempty"` // 内网VIP地址列表
 
 }
 
@@ -295,7 +295,7 @@ type Rule struct {
 
 type DescribeSecurityGroupResponse struct {
 	BaseResponse
-	DataSet []*DescribeSecurityGroupDataSet `json:"omitempty"` // 获取的防火墙组详细信息
+	DataSet []*DescribeSecurityGroupDataSet `json:",omitempty"` // 获取的防火墙组详细信息
 
 }
 
@@ -319,7 +319,7 @@ func (r *DescribeSecurityGroup) R() UResponse {
 
 type DescribeSecurityGroupResourceResponse struct {
 	BaseResponse
-	DataSet []string `json:"omitempty"` // IP列表数组 如 [“10.10.10.10”, “10.10.10.11”]
+	DataSet []string `json:",omitempty"` // IP列表数组 如 [“10.10.10.10”, “10.10.10.11”]
 
 }
 
