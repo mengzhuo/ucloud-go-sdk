@@ -16,6 +16,7 @@ import (
 
 type UResponse interface {
 	OK() bool
+	Msg() string
 	Data() interface{}
 }
 
