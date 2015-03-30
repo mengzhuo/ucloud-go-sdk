@@ -6,21 +6,37 @@ import (
 	"testing"
 )
 
-func TestCreateUHostInstance(t *testing.T) {
+const REGION = "cn-east-01"
 
-	rsp, err := u.Do(&CreateUHostInstance{Region: "cn-east-01", ImageId: "UImage", LoginMode: "Password",
-		Password: "UGFzc3dvcmQxCg==",
-		Name:     "Uhost11222"})
-	fmt.Println(rsp.Data().([]string))
-	if !rsp.OK() || err != nil {
+func TestFromImageToUHost(t *testing.T) {
+
+	var imageid string
+
+	rsp, err := u.Do(&DescribeImage{Region: REGION})
+	if err != nil {
 		t.Fatal(rsp, err)
 	}
+	images := rsp.Data().([]*ImageSet)
+	for _, v := range images {
+		imageid = v.ImageId
+		fmt.Println(v.ImageId, v.OsType)
+		break
+	}
+
+	rsp, err = u.Do(&CreateUHostInstance{Region: REGION,
+		ImageId:   imageid,
+		LoginMode: "Password",
+		Password:  "cGlHVWhlbkRBCg==", // piGUhenDA
+		Name:      "Uhost11222"})
+	if err != nil {
+		t.Fatal(rsp, err)
+	}
+
 }
 
 func TestDescribeUHostInstance(t *testing.T) {
-	rsp, err := u.Do(&DescribeUHostInstance{Region: "cn-east-01"})
-	fmt.Println(rsp.Data().([]*UHostSet)[0])
-	if !rsp.OK() || err != nil {
+	rsp, err := u.Do(&DescribeUHostInstance{Region: REGION})
+	if err != nil {
 		t.Fatal(rsp, err)
 	}
 }

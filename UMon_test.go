@@ -1,10 +1,11 @@
 package ucloud
 
 import (
-	"fmt"
-	"testing"
+	_ "fmt"
+	_ "testing"
 )
 
+/*
 func TestGetMetric(t *testing.T) {
 
 	g := GetMetric{Region: "cn-east-01",
@@ -18,3 +19,4 @@ func TestGetMetric(t *testing.T) {
 	data := rsp.Data().(map[string]*GetMetricItem)
 	fmt.Println(data["NetworkOut"])
 }
+*/

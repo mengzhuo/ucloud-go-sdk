@@ -365,7 +365,7 @@ func (r *DescribeImageResponse) Data() interface{} {
 }
 
 type DescribeImage struct {
-	Region    int    //	数据中心，参见 数据中心列表	Yes
+	Region    string //	数据中心，参见 数据中心列表	Yes
 	ImageType string `ucloud:"optional"` //	标准镜像：Base，行业镜像：Business， 自定义镜像：Custom，默认返回所有类型	No
 	OsType    string `ucloud:"optional"` //	操作系统类型：Linux， Windows 默认返回所有类型	No
 	ImageId   string `ucloud:"optional"` //	镜像Id	No

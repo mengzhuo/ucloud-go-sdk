@@ -18,6 +18,7 @@ type UResponse interface {
 	OK() bool
 	Msg() string
 	Data() interface{}
+	SetCode(int)
 }
 
 type URequest interface {
@@ -32,7 +33,10 @@ type BaseResponse struct {
 }
 
 func (b *BaseResponse) OK() bool {
-	return (b.RetCode == 0)
+	return (b.RetCode == 0) // XXX ReturnCode is string for abnormal
+}
+func (b *BaseResponse) SetCode(i int) {
+	b.RetCode = i // This is a patch for Ucloud API return with string
 }
 
 func (b *BaseResponse) Msg() string {
@@ -94,6 +98,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 
 func (u *UcloudApiClient) Get(params map[string]string, rsp UResponse) error {
 
+	rsp.SetCode(500) // Patch broken API
 	r, err := u.RawGet("/", params)
 	if err != nil {
 		return err
@@ -102,6 +107,9 @@ func (u *UcloudApiClient) Get(params map[string]string, rsp UResponse) error {
 	body, _ := ioutil.ReadAll(r.Body)
 	//fmt.Printf("%s", body)
 	json.Unmarshal(body, &rsp)
+	if !rsp.OK() {
+		return fmt.Errorf("%s", body)
+	}
 	return nil
 }
 
