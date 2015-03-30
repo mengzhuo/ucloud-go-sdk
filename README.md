@@ -24,11 +24,21 @@ Ucloud API 的 go语言SDK
 因此，如需要对请求的数据进行读取，便需要type assertion
 例如：
     
-	rsp, err := u.Do(&DescribeUHostInstance{Region: "cn-east-01"})
-	if !rsp.OK() || err != nil {
-        // Bla……
-	}
-	fmt.Println(rsp.Data().([]*UHostSet)[0])
+    rsp, err := u.Do(&ucloud.DescribeUHostInstance{Region: "cn-east-01"})
+    if err != nil {
+        panic(err)
+    }
+    for _, h := range rsp.Data().([]*ucloud.UHostSet) {
+        fmt.Println(h)
+        for _, v := range h.DiskSet {
+            fmt.Println(v)
+        }
+    }
+    /* 返回
+    &{uhost-ahdvfh Normal 71bf5434-9ae1-4b1e-ad6d-39cc814a1423 uimage-55j4fq UCloud Debian 6.0 64位 Default  uhost0 Running 1427473439 Trial 1427905439 2 4096 [0xc208129080 0xc208129260] [0xc20813c140]}
+    &{Boot 71bf5434-9ae1-4b1e-ad6d-39cc814a1423 20}
+    &{Data b9a0cb79-6d4c-4303-95a2-c97d7c5cf939 20}
+    */
 
 ## Request种类
 目前包括了UHost, UMon, UCDN, UDB, ULB, UNet, Sms接口
