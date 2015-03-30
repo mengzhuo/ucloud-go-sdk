@@ -34,6 +34,10 @@ func (b *BaseResponse) OK() bool {
 	return (b.RetCode == 0)
 }
 
+func (b *BaseResponse) Msg() string {
+	return b.Message
+}
+
 type UcloudApiClient struct {
 	baseURL    string
 	publicKey  string
