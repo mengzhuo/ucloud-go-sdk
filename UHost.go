@@ -417,55 +417,6 @@ func (r *TerminateCustomImage) R() UResponse {
 	return &TerminateCustomImageResponse{}
 }
 
-// AttachUdisk ---------
-
-type AttachUdiskResponse struct {
-	BaseResponse
-	UhostId string `json:",omitempty"`
-	UDiskId string `json:",omitempty"`
-}
-
-func (r *AttachUdiskResponse) Data() interface{} {
-	return struct {
-		UhostId string
-		UDiskId string
-	}{r.UhostId, r.UDiskId}
-}
-
-type AttachUdisk struct {
-	Region  string //	数据中心，参见 数据中心列表	Yes
-	UHostId string //	UHost实例ID	Yes
-	UDiskId string //	需要挂载的UDisk实例ID	Yes
-}
-
-func (r *AttachUdisk) R() UResponse {
-	return &AttachUdiskResponse{}
-}
-
-// DetachUdisk ----------
-func (r *DetachUdiskResponse) Data() interface{} {
-	return struct {
-		UhostId string //卸载的UHost实例ID
-		UDiskId string //卸载的UDisk实例ID
-	}{r.UhostId, r.UDiskId}
-}
-
-type DetachUdiskResponse struct {
-	BaseResponse
-	UhostId string //卸载的UHost实例ID
-	UDiskId string //卸载的UDisk实例ID
-}
-
-func (r *DetachUdisk) R() UResponse {
-	return &DetachUdiskResponse{}
-}
-
-type DetachUdisk struct {
-	Region  string //	数据中心，参见 数据中心列表	Yes
-	UHostId string //	UHost实例ID	Yes
-	UDiskId string //	需要卸载的UDisk实例ID	Yes
-}
-
 // ---------------- CreateUhostInstanceSnapshot ------------------
 
 type CreateUhostInstanceSnapshotResponse struct {
