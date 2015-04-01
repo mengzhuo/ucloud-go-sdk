@@ -41,7 +41,17 @@ Ucloud API 的 go语言SDK
     */
 
 ## Request种类
-目前包括了UHost, UMon, UCDN, UDB, ULB, UNet, Sms接口
+目前包括了
+
+    Host
+    UMon
+    UCDN
+    UDB
+    ULB
+    UNet
+    Sms
+    UDisk
+
 请求方式与[Ucloud API文档](http://docs.ucloud.cn/api/apilist.html)一致，这里就不再赘述了
 
 ## LICENSE
