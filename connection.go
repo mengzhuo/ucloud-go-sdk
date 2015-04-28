@@ -66,8 +66,10 @@ func (u *UcloudApiClient) verify_ac(encoded_params string) []byte {
 }
 
 func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Response, error) {
+	return u.conn.Get(u.MakeURI(url, params))
+}
 
-	// Copy params
+func (u *UcloudApiClient) MakeURI(url string, params map[string]string) string {
 	_params := make(map[string]string, len(params)+1)
 	for k, v := range params {
 		_params[k] = v
@@ -93,7 +95,7 @@ func (u *UcloudApiClient) RawGet(url string, params map[string]string) (*http.Re
 	data.Set("Signature", sig)
 	uri := u.baseURL + url + "?" + data.Encode()
 	//fmt.Println(uri)
-	return u.conn.Get(uri)
+	return uri
 }
 
 func (u *UcloudApiClient) Get(params map[string]string, rsp UResponse) error {
@@ -113,9 +115,8 @@ func (u *UcloudApiClient) Get(params map[string]string, rsp UResponse) error {
 	return nil
 }
 
-func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
+func (u *UcloudApiClient) MakeParams(request URequest) (params map[string]string, err error) {
 
-	rsp := request.R()
 	v := reflect.ValueOf(request)
 	typ := reflect.TypeOf(request)
 
@@ -124,7 +125,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 		typ = typ.Elem()
 	}
 
-	params := make(map[string]string, 0) // it's 0 for optional might skip
+	params = make(map[string]string, 0) // it's 0 for optional might skip
 
 	for i := 0; i < typ.NumField(); i++ {
 
@@ -138,7 +139,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 				if tag == "optional" {
 					continue
 				} else {
-					return nil, fmt.Errorf("Lack of parameter:%s", name)
+					return params, fmt.Errorf("Lack of parameter:%s", name)
 				}
 			}
 			for j := 0; j < field.Len(); j++ {
@@ -165,7 +166,7 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 			if num == 0.0 && tag == "optional" {
 				continue
 			}
-			params[name] = fmt.Sprintf("%v", num) // FIXME: float don't act like python
+			params[name] = fmt.Sprintf("%v", num)
 		case reflect.Bool:
 			b := field.Bool()
 			if !b && tag == "optional" {
@@ -194,9 +195,17 @@ func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
 	typ_name_list := strings.Split(typ.String(), ".")
 	typ_name := typ_name_list[len(typ_name_list)-1]
 	params["Action"] = typ_name
+	return params, nil
+}
 
+func (u *UcloudApiClient) Do(request URequest) (UResponse, error) {
+
+	rsp := request.R()
+	params, err := u.MakeParams(request)
+	if err != nil {
+		return rsp, err
+	}
 	// OK, now we had params
-	err := u.Get(params, rsp)
-
+	err = u.Get(params, rsp)
 	return rsp, err
 }

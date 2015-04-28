@@ -2,41 +2,25 @@
 package ucloud
 
 import (
-	"fmt"
 	"testing"
 )
 
-const REGION = "cn-east-01"
-
-func TestFromImageToUHost(t *testing.T) {
-
-	var imageid string
-
-	rsp, err := u.Do(&DescribeImage{Region: REGION})
-	if err != nil {
-		t.Fatal(rsp, err)
-	}
-	images := rsp.Data().([]*ImageSet)
-	for _, v := range images {
-		imageid = v.ImageId
-		fmt.Println(v.ImageId, v.OsType)
-		break
+func TestCreateUhostInstance(t *testing.T) {
+	r := &CreateUHostInstance{Region: "cn-north-01",
+		ImageId:    "f43736e1-65a5-4bea-ad2e-8a46e18883c2",
+		CPU:        2,
+		Memory:     2048,
+		DiskSpace:  10,
+		LoginMode:  "Password",
+		Password:   "UGFzc3dvcmQxCg==",
+		Name:       "UCloudExample01",
+		ChargeType: "Month",
+		Quantity:   1,
 	}
 
-	rsp, err = u.Do(&CreateUHostInstance{Region: REGION,
-		ImageId:   imageid,
-		LoginMode: "Password",
-		Password:  "cGlHVWhlbkRBCg==", // piGUhenDA
-		Name:      "Uhost11222"})
-	if err != nil {
-		t.Fatal(rsp, err)
-	}
+	cmp := `https://api.ucloud.cn/?Action=CreateUHostInstance&Region=cn-north-01&ImageId=f43736e1-65a5-4bea-ad2e-8a46e18883c2&CPU=2&Memory=2048&DiskSpace=10&LoginMode=Password&Password=UGFzc3dvcmQxCg%3D%3D&Name=UCloudExample01&ChargeType=Month&Quantity=1`
 
-}
-
-func TestDescribeUHostInstance(t *testing.T) {
-	rsp, err := u.Do(&DescribeUHostInstance{Region: REGION})
-	if err != nil {
-		t.Fatal(rsp, err)
+	if err := FakeGetAndCmp(r, cmp); err != nil {
+		t.Fatal(err)
 	}
 }
