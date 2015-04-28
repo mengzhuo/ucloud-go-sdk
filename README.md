@@ -43,7 +43,7 @@ Ucloud API 的 go语言SDK
 ## Request种类
 目前包括了
 
-    Host
+    UHost
     UMon
     UCDN
     UDB
