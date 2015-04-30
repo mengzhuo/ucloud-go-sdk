@@ -1,119 +1,157 @@
 package ucloud
 
-// ---------------- CreateUdiskSnapshot ------------------
+// ---------------- CreateUDiskSnapshot ------------------
 
-type CreateUdiskSnapshotResponse struct {
+type CreateUDiskSnapshotResponse struct {
 	BaseResponse
 	SnapshotId string `json:"omitempty"` // 快照Id
 
 }
 
-func (r *CreateUdiskSnapshotResponse) Data() interface{} {
+func (r *CreateUDiskSnapshotResponse) Data() interface{} {
 	return r.SnapshotId
 }
 
-type CreateUdiskSnapshot struct {
+type CreateUDiskSnapshot struct {
+	Region     string //	数据中心, 参见 数据中心列表	Yes
+	UDiskId    string //	快照的UDisk的Id	Yes
+	Name       string //	快照名称	Yes
+	ChargeType string `ucloud:"optional"` //Year , Month, Dynamic 默认: Dynamic	No
+	Quantity   int    `ucloud:"optional"` //	购买时长 默认: 1	No
+	ProjectId  string `ucloud:"optional"` //	项目编号	No
+	Comment    string `ucloud:"optional"` //快照描述	No
+
 }
 
-func (r *CreateUdiskSnapshot) R() UResponse {
-	return &CreateUdiskSnapshotResponse{}
+func (r *CreateUDiskSnapshot) R() UResponse {
+	return &CreateUDiskSnapshotResponse{}
 }
 
-// ---------------- CreateUdisk ------------------
+// ---------------- CreateUDisk ------------------
 
-type CreateUdiskResponse struct {
+type CreateUDiskResponse struct {
 	BaseResponse
 	UDiskId string `json:"omitempty"` // UDisk实例Id
 
 }
 
-func (r *CreateUdiskResponse) Data() interface{} {
+func (r *CreateUDiskResponse) Data() interface{} {
 	return r.UDiskId
 }
 
-type CreateUdisk struct {
+type CreateUDisk struct {
+	Region     string //	数数据中心, 参见 数据中心列表	Yes
+	Size       int    // 磁盘大小, 单位:GB, 范围[1~1000]	Yes
+	Name       string //	实例名称	Yes
+	CouponId   string `ucloud:"optional"` //	使用的代金券id	No
+	ChargeType string `ucloud:"optional"` //	Year , Month, Dynamic, Trial 默认: Dynamic	No
+	Quantity   int    `ucloud:"optional"` //  购买时长 默认: 1	No
+	ProjectId  string `ucloud:"optional"` //	项目编号	No
+
 }
 
-func (r *CreateUdisk) R() UResponse {
-	return &CreateUdiskResponse{}
+func (r *CreateUDisk) R() UResponse {
+	return &CreateUDiskResponse{}
 }
 
-// ---------------- CloneUdisk ------------------
+// ---------------- CloneUDisk ------------------
 
-type CloneUdiskResponse struct {
+type CloneUDiskResponse struct {
 	BaseResponse
 	UDiskId string `json:"omitempty"` // 创建UDisk Id
 
 }
 
-func (r *CloneUdiskResponse) Data() interface{} {
+func (r *CloneUDiskResponse) Data() interface{} {
 	return r.UDiskId
 }
 
-type CloneUdisk struct {
+type CloneUDisk struct {
+	Region     string // 	数据中心, 参见 数据中心列表	Yes
+	Name       string `ucloud:"optional"` //  实例名称	No
+	SourceId   string //	克隆父Disk的Id	Yes
+	CouponId   string `ucloud:"optional"` //	使用的代金券id	No
+	Comment    string `ucloud:"optional"` //  Disk注释	No
+	ChargeType string `ucloud:"optional"` //	Year , Month, Dynamic 默认: Dynamic	No
+	Quantity   int    `ucloud:"optional"` //r	购买时长 默认: 1	No
+	ProjectId  string `ucloud:"optional"` //	项目编号	No
 }
 
-func (r *CloneUdisk) R() UResponse {
-	return &CloneUdiskResponse{}
+func (r *CloneUDisk) R() UResponse {
+	return &CloneUDiskResponse{}
 }
 
-// ---------------- CloneUdiskSnapshot ------------------
+// ---------------- CloneUDiskSnapshot ------------------
 
-type CloneUdiskSnapshotResponse struct {
+type CloneUDiskSnapshotResponse struct {
 	BaseResponse
 	UDiskId string `json:"omitempty"` // 创建UDisk Id
 
 }
 
-func (r *CloneUdiskSnapshotResponse) Data() interface{} {
+func (r *CloneUDiskSnapshotResponse) Data() interface{} {
 	return r.UDiskId
 }
 
-type CloneUdiskSnapshot struct {
-	ProjectId string // 项目编号 None  // 购买时长 默认: 1
-
+type CloneUDiskSnapshot struct {
+	Region     string //	数据中心, 参见 数据中心列表	Yes
+	Name       string `ucloud:"optional"` //实例名称	No
+	SourceId   string //克隆父Snapshot的Id	Yes
+	Size       int    //磁盘大小, 单位:GB, 范围[1~1000]	Yes
+	CouponId   string `ucloud:"optional"` //使用的代金券id	No
+	Comment    string `ucloud:"optional"` //Disk注释	No
+	ChargeType string `ucloud:"optional"` //Year , Month, Dynamic 默认: Dynamic	No
+	Quantity   int    `ucloud:"optional"` //购买时长 默认: 1	No
+	ProjectId  string `ucloud:"optional"` // 项目编号 None  // 购买时长 默认: 1
 }
 
-func (r *CloneUdiskSnapshot) R() UResponse {
-	return &CloneUdiskSnapshotResponse{}
+func (r *CloneUDiskSnapshot) R() UResponse {
+	return &CloneUDiskSnapshotResponse{}
 }
 
-// ---------------- DeleteUdiskSnapshot ------------------
+// ---------------- DeleteUDiskSnapshot ------------------
 
-type DeleteUdiskSnapshotResponse struct {
+type DeleteUDiskSnapshotResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUdiskSnapshotResponse) Data() interface{} {
+func (r *DeleteUDiskSnapshotResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUdiskSnapshot struct {
+type DeleteUDiskSnapshot struct {
+	Region     string //	数据中心, 参见 数据中心列表	Yes
+	SnapshotId string //	快照Id	Yes
+	ProjectId  string `ucloud:"optional"` //项目编号	No
+
 }
 
-func (r *DeleteUdiskSnapshot) R() UResponse {
-	return &DeleteUdiskSnapshotResponse{}
+func (r *DeleteUDiskSnapshot) R() UResponse {
+	return &DeleteUDiskSnapshotResponse{}
 }
 
-// ---------------- DeleteUdisk ------------------
+// ---------------- DeleteUDisk ------------------
 
-type DeleteUdiskResponse struct {
+type DeleteUDiskResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUdiskResponse) Data() interface{} {
+func (r *DeleteUDiskResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUdisk struct {
+type DeleteUDisk struct {
+	Region    string //	数据中心, 参见 数据中心列表	Yes
+	UDiskId   string //	要删除的UDisk的Id	Yes
+	ProjectId string `ucloud:"optional"` //	项目编号	No
 }
 
-func (r *DeleteUdisk) R() UResponse {
-	return &DeleteUdiskResponse{}
+func (r *DeleteUDisk) R() UResponse {
+	return &DeleteUDiskResponse{}
 }
 
-// ---------------- DescribeUdiskSnapshot ------------------
-type DescribeUdiskSnapshotItem struct {
+// ---------------- DescribeUDiskSnapshot ------------------
+type DescribeUDiskSnapshotItem struct {
 	SnapshotId  string // 快照Id
 	Name        string // 快照名称
 	UDiskId     string // 快照的源UDisk的Id
@@ -125,26 +163,31 @@ type DescribeUdiskSnapshotItem struct {
 	Comment     string // 快照描述
 }
 
-type DescribeUdiskSnapshotResponse struct {
+type DescribeUDiskSnapshotResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdiskSnapshotItem `json:"omitempty"` // JSON 格式的Snapshot列表, 详细参见ResponseItem
+	DataSet    []*DescribeUDiskSnapshotItem `json:"omitempty"` // JSON 格式的Snapshot列表, 详细参见ResponseItem
 	TotalCount int                          `json:"omitempty"` // 根据过滤条件得到的总数
 
 }
 
-func (r *DescribeUdiskSnapshotResponse) Data() interface{} {
+func (r *DescribeUDiskSnapshotResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdiskSnapshot struct {
+type DescribeUDiskSnapshot struct {
+	Region     string //数据中心, 参见 数据中心列表	Yes
+	SnapshotId string `ucloud:"optional"` //UDisk快照Id(留空返回全部)	No
+	Offset     int    `ucloud:"optional"` //数据偏移量, 默认为0	No
+	Limit      int    `ucloud:"optional"` //返回数据长度, 默认为20	No
+	ProjectId  string `ucloud:"optional"` //项目编号	No
 }
 
-func (r *DescribeUdiskSnapshot) R() UResponse {
-	return &DescribeUdiskSnapshotResponse{}
+func (r *DescribeUDiskSnapshot) R() UResponse {
+	return &DescribeUDiskSnapshotResponse{}
 }
 
-// ---------------- DescribeUdisk ------------------
-type DescribeUdiskItem struct {
+// ---------------- DescribeUDisk ------------------
+type DescribeUDiskItem struct {
 	UDiskId     string // UDisk实例Id
 	Name        string // 实例名称
 	Size        string // 容量单位GB
@@ -158,96 +201,122 @@ type DescribeUdiskItem struct {
 	ChargeType  string // Year,Month,Dynamic,Trial
 }
 
-type DescribeUdiskResponse struct {
+type DescribeUDiskResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdiskItem `json:"omitempty"` // JSON 格式的UDisk数据列表, 每项参数可见下面 ResponseItem
+	DataSet    []*DescribeUDiskItem `json:"omitempty"` // JSON 格式的UDisk数据列表, 每项参数可见下面 ResponseItem
 	TotalCount int                  `json:"omitempty"` // 根据过滤条件得到的总数
 
 }
 
-func (r *DescribeUdiskResponse) Data() interface{} {
+func (r *DescribeUDiskResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdisk struct {
+type DescribeUDisk struct {
+	Region    string   //	数据中心, 参见 数据中心列表	Yes
+	UDiskId   []string `ucloud:"optional"` //	UDisk Id(留空返回全部)	No
+	Offset    int      `ucloud:"optional"` //	数据偏移量, 默认为0	No
+	Limit     int      `ucloud:"optional"` //    返回数据长度, 默认为20	No
+	ProjectId string   `ucloud:"optional"` //	项目编号	No
 }
 
-func (r *DescribeUdisk) R() UResponse {
-	return &DescribeUdiskResponse{}
+func (r *DescribeUDisk) R() UResponse {
+	return &DescribeUDiskResponse{}
 }
 
-// ---------------- DescribeUdiskPrice ------------------
-type DescribeUdiskPriceItem struct {
+// ---------------- DescribeUDiskPrice ------------------
+type DescribeUDiskPriceItem struct {
 	ChargeType string  // Year， Month， Dynamic，Trial
 	Price      float64 // 价格
 }
 
-type DescribeUdiskPriceResponse struct {
+type DescribeUDiskPriceResponse struct {
 	BaseResponse
-	DataSet []*DescribeUdiskPriceItem `json:"omitempty"` // 价格
+	DataSet []*DescribeUDiskPriceItem `json:"omitempty"` // 价格
 
 }
 
-func (r *DescribeUdiskPriceResponse) Data() interface{} {
+func (r *DescribeUDiskPriceResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdiskPrice struct {
+type DescribeUDiskPrice struct {
+	Region     string //	数据中心, 参见 数据中心列表	Yes
+	Size       int    //	购买UDisk大小,单位:GB,范围[1~1000]	Yes
+	ChargeType string `ucloud:"optional"` //	Year， Month， Dynamic，Trial，默认: Dynamic 如果不指定，则一次性获取三种计费	No
+	Quantity   int    `ucloud:"optional"` //	购买UDisk的时长，默认值为1	No
+	ProjectId  string `ucloud:"optional"` //	项目编号	No
+
 }
 
-func (r *DescribeUdiskPrice) R() UResponse {
-	return &DescribeUdiskPriceResponse{}
+func (r *DescribeUDiskPrice) R() UResponse {
+	return &DescribeUDiskPriceResponse{}
 }
 
-// ---------------- DescribeUdiskUpgradePrice ------------------
+// ---------------- DescribeUDiskUpgradePrice ------------------
 
-type DescribeUdiskUpgradePriceResponse struct {
+type DescribeUDiskUpgradePriceResponse struct {
 	BaseResponse
 	Price float64 `json:"omitempty"` // 价格
 
 }
 
-func (r *DescribeUdiskUpgradePriceResponse) Data() interface{} {
+func (r *DescribeUDiskUpgradePriceResponse) Data() interface{} {
 	return r.Price
 }
 
-type DescribeUdiskUpgradePrice struct {
+type DescribeUDiskUpgradePrice struct {
+	Region    string //	数据中心, 参见 数据中心列表	Yes
+	Size      int    //	购买UDisk大小,单位:GB,范围[1~1000]	Yes
+	SourceId  string //	升级目标UDisk ID	Yes
+	ProjectId string `ucloud:"optional"` //	项目编号	No
 }
 
-func (r *DescribeUdiskUpgradePrice) R() UResponse {
-	return &DescribeUdiskUpgradePriceResponse{}
+func (r *DescribeUDiskUpgradePrice) R() UResponse {
+	return &DescribeUDiskUpgradePriceResponse{}
 }
 
-// ---------------- RenameUdisk ------------------
+// ---------------- RenameUDisk ------------------
 
-type RenameUdiskResponse struct {
+type RenameUDiskResponse struct {
 	BaseResponse
 }
 
-func (r *RenameUdiskResponse) Data() interface{} {
+func (r *RenameUDiskResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type RenameUdisk struct {
+type RenameUDisk struct {
+	Region    string //	数据中心, 参见 数据中心列表	Yes
+	UDiskId   string //	重命名的UDisk的Id	Yes
+	UDiskName string //	重命名UDisk的name	Yes
+	ProjectId string `ucloud:"optional"` //	项目编号	No
+
 }
 
-func (r *RenameUdisk) R() UResponse {
-	return &RenameUdiskResponse{}
+func (r *RenameUDisk) R() UResponse {
+	return &RenameUDiskResponse{}
 }
 
-// ---------------- ResizeUdisk ------------------
+// ---------------- ResizeUDisk ------------------
 
-type ResizeUdiskResponse struct {
+type ResizeUDiskResponse struct {
 	BaseResponse
 }
 
-func (r *ResizeUdiskResponse) Data() interface{} {
+func (r *ResizeUDiskResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ResizeUdisk struct {
+type ResizeUDisk struct {
+	Region    string //	数据中心, 参见 数据中心列表	Yes
+	UDiskId   string //	UDisk Id	Yes
+	Size      int    //	调整后大小, 单位:GB, 范围[1~1000],只能增大	Yes
+	CouponId  string `ucloud:"optional"` //	使用的代金券id	No
+	ProjectId string `ucloud:"optional"` //	项目编号	No
+
 }
 
-func (r *ResizeUdisk) R() UResponse {
-	return &ResizeUdiskResponse{}
+func (r *ResizeUDisk) R() UResponse {
+	return &ResizeUDiskResponse{}
 }

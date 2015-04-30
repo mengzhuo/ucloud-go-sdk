@@ -148,7 +148,7 @@ func (u *UcloudApiClient) MakeParams(request URequest) (params map[string]string
 			}
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 			num := field.Int()
-			if num == 0 && tag == "optional" {
+			if num == -1 && tag == "optional" {
 				continue
 			}
 			/*
