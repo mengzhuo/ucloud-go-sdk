@@ -165,7 +165,7 @@ func (r *GetUcdnDomainBandwidthResponse) Data() interface{} {
 
 type GetUcdnDomainBandwidth struct {
 	DomainId  []string `ucloud:"optional"` // 域名ID，创建加速域名时生成。
-	Areacode  string   `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
+	Areacode  []string `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
 	BeginTime int      `ucloud:"optional"` // 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。
 	EndTime   int      `ucloud:"optional"` // 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
 	Daily     int      `ucloud:"optional"` // 是否按天展示带宽峰值，枚举值：0：否；1：是；默认为0
@@ -194,7 +194,7 @@ func (r *GetUcdnDomainTrafficResponse) Data() interface{} {
 
 type GetUcdnDomainTraffic struct {
 	DomainId  []string `ucloud:"optional"` // 域名ID，创建加速域名时生成。
-	Areacode  string   `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
+	Areacode  []string `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
 	BeginTime int      `ucloud:"optional"` // 查询的起始时间，格式为Unix Timestamp。如果有EndTime，BeginTime必须赋值。
 	EndTime   int      `ucloud:"optional"` // 查询的结束时间，格式为Unix Timestamp。EndTime默认为当前时间，BeginTime默认为当前时间前一天时间。
 

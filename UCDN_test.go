@@ -75,12 +75,12 @@ func TestDescribeUcdnDomain(t *testing.T) {
 // ---------------- TestGetUcdnDomainBandwidth ------------------
 func TestGetUcdnDomainBandwidth(t *testing.T) {
 	r := &GetUcdnDomainBandwidth{
-		Areacode:  "cn",
+		Areacode:  []string{"cn"},
 		EndTime:   1421166064,
 		BeginTime: 1420992000,
 		DomainId:  []string{"ucdn-iw4hun"},
 	}
-	cmp := `https://api.ucloud.cn/?Action=GetUcdnDomainBandwidth&DomainId.0=ucdn-iw4hun&BeginTime=1420992000&EndTime=1421166064&Areacode=cn`
+	cmp := `https://api.ucloud.cn/?Action=GetUcdnDomainBandwidth&DomainId.0=ucdn-iw4hun&BeginTime=1420992000&EndTime=1421166064&Areacode.0=cn`
 
 	if err := FakeGetAndCmp(r, cmp); err != nil {
 		t.Fatal(err)
@@ -90,12 +90,12 @@ func TestGetUcdnDomainBandwidth(t *testing.T) {
 // ---------------- TestGetUcdnDomainTraffic ------------------
 func TestGetUcdnDomainTraffic(t *testing.T) {
 	r := &GetUcdnDomainTraffic{
-		Areacode:  "cn",
+		Areacode:  []string{"cn"},
 		EndTime:   1421166064,
 		BeginTime: 1420992000,
 		DomainId:  []string{"ucdn-iw4hun"},
 	}
-	cmp := `https://api.ucloud.cn/?Action=GetUcdnDomainTraffic&DomainId.0=ucdn-iw4hun&BeginTime=1420992000&EndTime=1421166064&Areacode=cn`
+	cmp := `https://api.ucloud.cn/?Action=GetUcdnDomainTraffic&DomainId.0=ucdn-iw4hun&BeginTime=1420992000&EndTime=1421166064&Areacode.0=cn`
 
 	if err := FakeGetAndCmp(r, cmp); err != nil {
 		t.Fatal(err)
