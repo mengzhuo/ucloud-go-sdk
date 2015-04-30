@@ -26,6 +26,9 @@ func FakeGetAndCmp(req URequest, cmp string) error {
 	for k, v := range cmp_uri.Query() {
 		gen := gen_uri.Query().Get(k)
 		cmp := v[0]
+		if cmp == "true" {
+			cmp = "True"
+		}
 		if cmp != gen {
 			return fmt.Errorf("%v FAILED at %s \n Generated:%#v\n  Original:%#v", req, k, gen, cmp)
 		}
