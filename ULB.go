@@ -1,62 +1,62 @@
 package ucloud
 
-// ---------------- CreateUlb ------------------
+// ---------------- CreateULB ------------------
 
-type CreateUlbResponse struct {
+type CreateULBResponse struct {
 	BaseResponse
 	ULBId string `json:",omitempty"` // 负载均衡实例的Id
 
 }
 
-func (r *CreateUlbResponse) Data() interface{} {
+func (r *CreateULBResponse) Data() interface{} {
 	return r.ULBId
 }
 
-type CreateUlb struct {
+type CreateULB struct {
 	Region  string // 数据中心，参见 数据中心列表
 	ULBName string `ucloud:"optional"` // 负载均衡的名字，默认值为空
 
 }
 
-func (r *CreateUlb) R() UResponse {
-	return &CreateUlbResponse{}
+func (r *CreateULB) R() UResponse {
+	return &CreateULBResponse{}
 }
 
-// ---------------- DeleteUlb ------------------
+// ---------------- DeleteULB ------------------
 
-type DeleteUlbResponse struct {
+type DeleteULBResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUlbResponse) Data() interface{} {
+func (r *DeleteULBResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUlb struct {
+type DeleteULB struct {
 	Region string // 数据中心，参见 数据中心列表
 	ULBId  string // 负载均衡实例的ID
 
 }
 
-func (r *DeleteUlb) R() UResponse {
-	return &DeleteUlbResponse{}
+func (r *DeleteULB) R() UResponse {
+	return &DeleteULBResponse{}
 }
 
-// ---------------- DescribeUlb ------------------
-type DescribUlbDataSet struct {
+// ---------------- DescribeULB ------------------
+type DescribULBDataSet struct {
 	ULBId         string              // 负载均衡实例的Id
 	ULBName       string              // 负载均衡实例的名字
 	BandwidthType int                 // 带宽模式，枚举值为：0，该负载均衡实例非共享带宽；1，该负载均衡实例使用共享带宽
 	CreateTime    int                 // 负载均衡的创建时间，格式为Unix Timestamp
-	IPSet         []*DescribeUlbIPSet // 负载均衡实例的外网IP信息，具体结构见下方IPSet
-	VserverSet    []*VserverSet       // 负载均衡实例中存在的VServer实例列表，具体结构件下方VserverSet
+	IPSet         []*DescribeULBIPSet // 负载均衡实例的外网IP信息，具体结构见下方IPSet
+	VServerSet    []*VServerSet       // 负载均衡实例中存在的VServer实例列表，具体结构件下方VServerSet
 }
-type DescribeUlbIPSet struct {
+type DescribeULBIPSet struct {
 	OperatorName string // 弹性IP的运营商信息，枚举值为：Telecom：电信IP；Unicom：联通IP；Bgp：BGP IP；International：国际IP
 	EIPId        string // 弹性IP的资源ID
 	EIP          string // 弹性IP的地址
 }
-type VserverSet struct {
+type VServerSet struct {
 	VServerId       string        // VServer实例的ID
 	VServerName     string        // VServer实例的名字
 	Protocol        string        // VServer实例的网络协议，枚举值为：HTTP, TCP, UDP, HTTPS
@@ -84,18 +84,18 @@ type BackendSet struct {
 	Status       int    // 后端资源的运行状态，枚举值为：0：运行正常；1：运行异常
 }
 
-type DescribeUlbResponse struct {
+type DescribeULBResponse struct {
 	BaseResponse
 	TotalCount int                  `json:",omitempty"` // 满足条件的负载均衡实例的总数
-	DataSet    []*DescribUlbDataSet `json:",omitempty"` // 负载均衡实例列表，具体结构见下方DataSet
+	DataSet    []*DescribULBDataSet `json:",omitempty"` // 负载均衡实例列表，具体结构见下方DataSet
 
 }
 
-func (r *DescribeUlbResponse) Data() interface{} {
+func (r *DescribeULBResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUlb struct {
+type DescribeULB struct {
 	Region string // 数据中心，参见 数据中心列表
 	ULBId  string `ucloud:"optional"` // 负载均衡实例的ID，若指定则返回指定的负载均衡实例信息；若不指定则返回用户当前数据中心中所有负载均衡实例的信息
 	Offset int    // 数据偏移量，默认为0
@@ -103,44 +103,46 @@ type DescribeUlb struct {
 
 }
 
-func (r *DescribeUlb) R() UResponse {
-	return &DescribeUlbResponse{}
+func (r *DescribeULB) R() UResponse {
+	return &DescribeULBResponse{}
 }
 
-// ---------------- UpdateUlbAttribute ------------------
+// ---------------- UpdateULBAttribute ------------------
 
-type UpdateUlbAttributeResponse struct {
+type UpdateULBAttributeResponse struct {
 	BaseResponse
 }
 
-func (r *UpdateUlbAttributeResponse) Data() interface{} {
+func (r *UpdateULBAttributeResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type UpdateUlbAttribute struct {
-	Region  string // 数据中心，参见 数据中心列表
-	ULBId   string // 负载均衡实例ID
-	ULBName string `ucloud:"optional"` // 负载均衡的名字，若无此字段则不做修改
+type UpdateULBAttribute struct {
+	Region string // 数据中心，参见 数据中心列表
+	ULBId  string // 负载均衡实例ID
+	Name   string `ucloud:"optional"` // 负载均衡的名字，若无此字段则不做修改
+	Tag    string `ucloud:"optional"` //业务
+	Remark string `ucloud:"optional"` //备注
 
 }
 
-func (r *UpdateUlbAttribute) R() UResponse {
-	return &UpdateUlbAttributeResponse{}
+func (r *UpdateULBAttribute) R() UResponse {
+	return &UpdateULBAttributeResponse{}
 }
 
-// ---------------- CreateVserver ------------------
+// ---------------- CreateVServer ------------------
 
-type CreateVserverResponse struct {
+type CreateVServerResponse struct {
 	BaseResponse
 	VServerId string `json:",omitempty"` // VServer实例的Id
 
 }
 
-func (r *CreateVserverResponse) Data() interface{} {
+func (r *CreateVServerResponse) Data() interface{} {
 	return r.VServerId
 }
 
-type CreateVserver struct {
+type CreateVServer struct {
 	Region          string // 数据中心，参见 数据中心列表
 	ULBId           string // 负载均衡实例ID
 	VServerName     string `ucloud:"optional"` // VServer实例名称，默认为空
@@ -153,56 +155,56 @@ type CreateVserver struct {
 
 }
 
-func (r *CreateVserver) R() UResponse {
-	return &CreateVserverResponse{}
+func (r *CreateVServer) R() UResponse {
+	return &CreateVServerResponse{}
 }
 
-// ---------------- DeleteVserver ------------------
+// ---------------- DeleteVServer ------------------
 
-type DeleteVserverResponse struct {
+type DeleteVServerResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteVserverResponse) Data() interface{} {
+func (r *DeleteVServerResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteVserver struct {
+type DeleteVServer struct {
 	Region    string // 数据中心，参见 数据中心列表
 	ULBId     string // 负载均衡实例的ID
 	VServerId string // VServer实例的ID
 
 }
 
-func (r *DeleteVserver) R() UResponse {
-	return &DeleteVserverResponse{}
+func (r *DeleteVServer) R() UResponse {
+	return &DeleteVServerResponse{}
 }
 
-// ---------------- UpdateVserverAttribute ------------------
+// ---------------- UpdateVServerAttribute ------------------
 
-type UpdateVserverAttributeResponse struct {
+type UpdateVServerAttributeResponse struct {
 	BaseResponse
 }
 
-func (r *UpdateVserverAttributeResponse) Data() interface{} {
+func (r *UpdateVServerAttributeResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type UpdateVserverAttribute struct {
+type UpdateVServerAttribute struct {
 	Region          string // 数据中心，参见 数据中心列表
 	ULBId           string // 负载均衡实例ID
 	VServerId       string // VServer实例ID
 	VServerName     string // VServer实例名称，若无此字段则不做修改
-	Protocol        string // VServer协议，枚举值为: HTTP, TCP, UDP. 若无此字段则不做修改
-	Method          string // VServer负载均衡算法, 枚举值为: Roundrobin, 轮询模式; Source,源IP模式. 若无此字段则不做修改
-	PersistenceType string // VServer会话保持模式, 枚举值为:None, 关闭会话保持;ServerInsert, 自动生成;UserDefined, 用户自定义.若无此字段则不做修改
-	PersistenceInfo string // 根据PersistenceType确定:None或ServerInsert, 此字段无意义;UserDefined, 则此字段传入用户自定义会话保持String.若无此字段则不做修改
-	ClientTimeout   string // 空闲连接的回收时间, 单位: 秒.取值范围: (0, 86400], 默认值: 60秒.若无此字段,则不做修改
+	Protocol        string `ucloud:"optional"` // VServer协议，枚举值为: HTTP, TCP, UDP. 若无此字段则不做修改
+	Method          string `ucloud:"optional"` // VServer负载均衡算法, 枚举值为: Roundrobin, 轮询模式; Source,源IP模式. 若无此字段则不做修改
+	PersistenceType string `ucloud:"optional"` // VServer会话保持模式, 枚举值为:None, 关闭会话保持;ServerInsert, 自动生成;UserDefined, 用户自定义.若无此字段则不做修改
+	PersistenceInfo string `ucloud:"optional"` // 根据PersistenceType确定:None或ServerInsert, 此字段无意义;UserDefined, 则此字段传入用户自定义会话保持String.若无此字段则不做修改
+	ClientTimeout   string `ucloud:"optional"` // 空闲连接的回收时间, 单位: 秒.取值范围: (0, 86400], 默认值: 60秒.若无此字段,则不做修改
 
 }
 
-func (r *UpdateVserverAttribute) R() UResponse {
-	return &UpdateVserverAttributeResponse{}
+func (r *UpdateVServerAttribute) R() UResponse {
+	return &UpdateVServerAttributeResponse{}
 }
 
 // ---------------- AllocateBackend ------------------
@@ -276,19 +278,19 @@ func (r *UpdateBackendAttribute) R() UResponse {
 	return &UpdateBackendAttributeResponse{}
 }
 
-// ---------------- CreateSsl ------------------
+// ---------------- CreateSSL ------------------
 
-type CreateSslResponse struct {
+type CreateSSLResponse struct {
 	BaseResponse
 	ULBId string `json:",omitempty"` // SSL证书的Id
 
 }
 
-func (r *CreateSslResponse) Data() interface{} {
+func (r *CreateSSLResponse) Data() interface{} {
 	return r.ULBId
 }
 
-type CreateSsl struct {
+type CreateSSL struct {
 	Region     string // 数据中心，参见 数据中心列表
 	SSLContent string // SSL证书的内容
 	SSLName    string `ucloud:"optional"` // SSL证书的名字，默认值为空
@@ -296,43 +298,43 @@ type CreateSsl struct {
 
 }
 
-func (r *CreateSsl) R() UResponse {
-	return &CreateSslResponse{}
+func (r *CreateSSL) R() UResponse {
+	return &CreateSSLResponse{}
 }
 
-// ---------------- DeleteSsl ------------------
+// ---------------- DeleteSSL ------------------
 
-type DeleteSslResponse struct {
+type DeleteSSLResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteSslResponse) Data() interface{} {
+func (r *DeleteSSLResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteSsl struct {
+type DeleteSSL struct {
 	Region string // 数据中心，参见 数据中心列表
 	SSLId  string // SSL证书的ID
 
 }
 
-func (r *DeleteSsl) R() UResponse {
-	return &DeleteSslResponse{}
+func (r *DeleteSSL) R() UResponse {
+	return &DeleteSSLResponse{}
 }
 
-// ---------------- BindSsl ------------------
+// ---------------- BindSSL ------------------
 
-type BindSslResponse struct {
+type BindSSLResponse struct {
 	BaseResponse
 	ULBId string `json:",omitempty"` // SSL证书的Id
 
 }
 
-func (r *BindSslResponse) Data() interface{} {
+func (r *BindSSLResponse) Data() interface{} {
 	return r.ULBId
 }
 
-type BindSsl struct {
+type BindSSL struct {
 	Region    string // 数据中心，参见 数据中心列表
 	SSLId     string // SSL证书的Id
 	ULBId     string // 所绑定ULB实例ID
@@ -340,12 +342,12 @@ type BindSsl struct {
 
 }
 
-func (r *BindSsl) R() UResponse {
-	return &BindSslResponse{}
+func (r *BindSSL) R() UResponse {
+	return &BindSSLResponse{}
 }
 
-// ---------------- DescribeSsl ------------------
-type DescribeSslDataSet struct {
+// ---------------- DescribeSSL ------------------
+type DescribeSSLDataSet struct {
 	SSLId      string // 证书的ID
 	SSLName    string // 证书的名字
 	SSLType    string // 证书的类型，枚举值为：0：Pem格式
@@ -355,18 +357,18 @@ type DescribeSslDataSet struct {
 	VServerId  string // 所绑定VServer的资源ID
 }
 
-type DescribeSslResponse struct {
+type DescribeSSLResponse struct {
 	BaseResponse
 	TotalCOunt string                `json:",omitempty"` // 满足条件的SSL证书总数
-	DataSet    []*DescribeSslDataSet `json:",omitempty"` // SSL证书详细信息，具体结构见DataSet
+	DataSet    []*DescribeSSLDataSet `json:",omitempty"` // SSL证书详细信息，具体结构见DataSet
 
 }
 
-func (r *DescribeSslResponse) Data() interface{} {
+func (r *DescribeSSLResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeSsl struct {
+type DescribeSSL struct {
 	Region string // 数据中心，参见 数据中心列表
 	SSLId  string `ucloud:"optional"` // SSL证书的Id
 	Limit  int    `ucloud:"optional"` // 数据分页值，默认为20
@@ -374,8 +376,8 @@ type DescribeSsl struct {
 
 }
 
-func (r *DescribeSsl) R() UResponse {
-	return &DescribeSslResponse{}
+func (r *DescribeSSL) R() UResponse {
+	return &DescribeSSLResponse{}
 }
 
 // ---------------- CreatePolicyGroup ------------------
