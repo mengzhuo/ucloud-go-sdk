@@ -106,11 +106,11 @@ type TerminateUHostInstance struct {
 
 type ResizeUHostInstanceResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *ResizeUHostInstanceResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ResizeUHostInstance struct {
@@ -128,11 +128,11 @@ func (r *ResizeUHostInstance) R() UResponse {
 // ReinstallUHostInstance ------------------
 type ReinstallUHostInstanceResponse struct {
 	BaseResponse
-	UhostId string
+	UHostId string
 }
 
 func (r *ReinstallUHostInstanceResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ReinstallUHostInstance struct {
@@ -151,11 +151,11 @@ func (r *ReinstallUHostInstance) R() UResponse {
 // StartUHostInstance ------------------
 type StartUHostInstanceResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *StartUHostInstanceResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type StartUHostInstance struct {
@@ -170,11 +170,11 @@ func (r *StartUHostInstance) R() UResponse {
 // StopUHostInstanceResponse ----------
 type StopUHostInstanceResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *StopUHostInstanceResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type StopUHostInstance struct {
@@ -190,11 +190,11 @@ func (r *StopUHostInstance) R() UResponse {
 
 type RebootUHostInstanceResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *RebootUHostInstanceResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type RebootUHostInstance struct {
@@ -210,11 +210,11 @@ func (r *RebootUHostInstance) R() UResponse {
 
 type ResetUHostInstancePasswordResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *ResetUHostInstancePasswordResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ResetUHostInstancePassword struct {
@@ -230,11 +230,11 @@ func (r *ResetUHostInstancePassword) R() UResponse {
 // ModifyUHostInstanceName ------------
 type ModifyUHostInstanceNameResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *ModifyUHostInstanceNameResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ModifyUHostInstanceName struct {
@@ -250,11 +250,11 @@ func (r *ModifyUHostInstanceName) R() UResponse {
 // ModifyUHostInstanceTag ---------
 type ModifyUHostInstanceTagResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *ModifyUHostInstanceTagResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ModifyUHostInstanceTag struct {
@@ -270,11 +270,11 @@ func (r *ModifyUHostInstanceTag) R() UResponse {
 // ModifyUHostInstanceRemark ----------
 type ModifyUHostInstanceRemarkResponse struct {
 	BaseResponse
-	UhostId string `json:",omitempty"`
+	UHostId string `json:",omitempty"`
 }
 
 func (r *ModifyUHostInstanceRemarkResponse) Data() interface{} {
-	return r.UhostId
+	return r.UHostId
 }
 
 type ModifyUHostInstanceRemark struct {
@@ -317,20 +317,27 @@ func (r *GetUHostInstancePrice) R() UResponse {
 }
 
 // GetUHostInstanceVncInfo -----------------
-type VncInfo struct {
-	UhostId     string `json:",omitempty"` //UHost实例ID
+
+type GetUHostInstanceVncInfoResponse struct {
+	BaseResponse
+	UHostId     string `json:",omitempty"` //UHost实例ID
 	VncIP       string `json:",omitempty"` //Vnc登录IP
 	VncPort     int    `json:",omitempty"` //Vnc登录端口
 	VncPassword string `json:",omitempty"` //Vnc 登录密码
 }
 
-type GetUHostInstanceVncInfoResponse struct {
-	BaseResponse
-	VncInfo
-}
-
 func (r *GetUHostInstanceVncInfoResponse) Data() interface{} {
-	return r.VncInfo
+	return struct {
+		UHostId     string
+		VncIP       string
+		VncPort     int
+		VncPassword string
+	}{
+		r.UHostId,
+		r.VncIP,
+		r.VncPort,
+		r.VncPassword,
+	}
 }
 
 type GetUHostInstanceVncInfo struct {
@@ -417,56 +424,110 @@ func (r *TerminateCustomImage) R() UResponse {
 	return &TerminateCustomImageResponse{}
 }
 
-// ---------------- CreateUhostInstanceSnapshot ------------------
+// ---------------- CreateUHostInstanceSnapshot ------------------
 
-type CreateUhostInstanceSnapshotResponse struct {
+type CreateUHostInstanceSnapshotResponse struct {
 	BaseResponse
-	UhostId      string `json:",omitempty"` // UHost实例ID
+	UHostId      string `json:",omitempty"` // UHost实例ID
 	SnapshotName string `json:",omitempty"` // 快照名称
 
 }
 
-func (r *CreateUhostInstanceSnapshotResponse) Data() interface{} {
+func (r *CreateUHostInstanceSnapshotResponse) Data() interface{} {
 	return struct {
-		UhostId      string `json:",omitempty"` // UHost实例ID
+		UHostId      string `json:",omitempty"` // UHost实例ID
 		SnapshotName string `json:",omitempty"` // 快照名称
-	}{r.UhostId, r.SnapshotName}
+	}{r.UHostId, r.SnapshotName}
 }
 
-type CreateUhostInstanceSnapshot struct {
+type CreateUHostInstanceSnapshot struct {
 	Region  string // 数据中心，参见 数据中心列表
 	UHostId string // UHost实例ID
 }
 
-func (r *CreateUhostInstanceSnapshot) R() UResponse {
-	return &CreateUhostInstanceSnapshotResponse{}
+func (r *CreateUHostInstanceSnapshot) R() UResponse {
+	return &CreateUHostInstanceSnapshotResponse{}
 }
 
-// ---------------- DescribeUhostInstanceSnapshot ------------------
+// ---------------- DescribeUHostInstanceSnapshot ------------------
 type SnapshotSet struct {
 	SnapshotName string // 快照名称
 	SnapshotTime string // 快照制作时间
 }
 
-type DescribeUhostInstanceSnapshotResponse struct {
+type DescribeUHostInstanceSnapshotResponse struct {
 	BaseResponse
-	UhostId     string         `json:",omitempty"` // UHost实例ID
+	UHostId     string         `json:",omitempty"` // UHost实例ID
 	SnapshotSet []*SnapshotSet `json:",omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
 
 }
 
-func (r *DescribeUhostInstanceSnapshotResponse) Data() interface{} {
+func (r *DescribeUHostInstanceSnapshotResponse) Data() interface{} {
 	return struct {
-		UhostId     string         `json:",omitempty"` // UHost实例ID
+		UHostId     string         `json:",omitempty"` // UHost实例ID
 		SnapshotSet []*SnapshotSet `json:",omitempty"` // UHost快照列表，详细参数可见下面SnapshotSet
-	}{r.UhostId, r.SnapshotSet}
+	}{r.UHostId, r.SnapshotSet}
 }
 
-type DescribeUhostInstanceSnapshot struct {
+type DescribeUHostInstanceSnapshot struct {
 	Region  string // 数据中心，参见 数据中心列表
 	UHostId string // UHost实例ID
 }
 
-func (r *DescribeUhostInstanceSnapshot) R() UResponse {
-	return &DescribeUhostInstanceSnapshotResponse{}
+func (r *DescribeUHostInstanceSnapshot) R() UResponse {
+	return &DescribeUHostInstanceSnapshotResponse{}
+}
+
+// ---------------- AttachUDisk ------------------
+
+type AttachUDiskResponse struct {
+	BaseResponse
+	UHostId string `json:"omitempty"` // 挂载的UHost实例ID
+	UDiskId string `json:"omitempty"` // 挂载的UDisk实例ID
+
+}
+
+func (r *AttachUDiskResponse) Data() interface{} {
+	return struct {
+		UHostId string
+		UDiskId string
+	}{r.UHostId, r.UHostId}
+}
+
+type AttachUDisk struct {
+	Region  string // 数据中心，参见 数据中心列表
+	UHostId string // UHost实例ID
+	UDiskId string //需要挂载的UDisk实例ID
+}
+
+func (r *AttachUDisk) R() UResponse {
+	return &AttachUDiskResponse{}
+}
+
+// ---------------- DetachUDisk ------------------
+
+type DetachUDiskResponse struct {
+	BaseResponse
+	UHostId string `json:"omitempty"` // 卸载的UHost实例ID
+	UDiskId string `json:"omitempty"` // 卸载的UDisk实例ID
+
+}
+
+func (r *DetachUDiskResponse) Data() interface{} {
+	return struct {
+		UHostId string
+		UDiskId string
+	}{
+		r.UHostId,
+		r.UDiskId}
+}
+
+type DetachUDisk struct {
+	Region  string // 数据中心，参见 数据中心列表
+	UHostId string // UHost实例ID
+	UDiskId string //需要挂载的UDisk实例ID
+}
+
+func (r *DetachUDisk) R() UResponse {
+	return &DetachUDiskResponse{}
 }

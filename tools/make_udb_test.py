@@ -26,7 +26,7 @@ def make(url, struct_name):
     data = requests.get(url).content
     p = bs4.BeautifulSoup(data)
     # Request
-    cmp_uri = p.find("div", {"id":"request-example"}).find("pre").text.replace("\n", "").replace("(s)", "s")
+    cmp_uri = p.find("div", {"class":"highlight-python"}).find("pre").text.replace("\n", "").replace("(s)", "s")
     
     mandatory_params = ""
     params = urlparse.parse_qs(cmp_uri)

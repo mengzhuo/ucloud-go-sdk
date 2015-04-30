@@ -59,9 +59,9 @@ func (r *CreateUcdnDomainResponse) Data() interface{} {
 
 type CreateUcdnDomain struct {
 	Domain          string   // 用于加速的域名
-	SourceIps       []string `ucloud:"optional"` // 源站IP，即cdn服务器回源访问的IP地址。支持多个源站IP。多个源站IP可以表述为：SourceIps.0=1.1.1.1，SourceIps.1=2.2.2.2（如果CdnType为live，则该字段非必须，否则该字段为必须字段）
+	SourceIp        []string `ucloud:"optional"` // 源站IP，即cdn服务器回源访问的IP地址。支持多个源站IP。多个源站IP可以表述为：SourceIps.0=1.1.1.1，SourceIps.1=2.2.2.2（如果CdnType为live，则该字段非必须，否则该字段为必须字段）
 	TestUrl         string   `ucloud:"optional"` // 测试url，用于域名创建加速时的测试。（如果CdnType为live，则该字段非必须，否则该字段为必须字段）
-	Areacodes       []string // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：Areacodes.0=cn, Areacodes.1=aboard。表示同时使用国内和海外节点
+	Areacode        []string // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：Areacodes.0=cn, Areacodes.1=aboard。表示同时使用国内和海外节点
 	CdnType         string   // 加速域名的业务类型，web代表网站，stream代表视频，download代表下载，Live代表直播
 	ChargeType      string   `ucloud:"optional"` // 计费方式。默认使用流量包计费。枚举值为：traffic：按流量包计费；bandwidth：按带宽计费；trafficused：代表流量后付费。（目前仅支持按流量包计费）
 	LiveStreamCount int      `ucloud:"optional"` // 直播流数（CdnType为live时，该字段为必须字段）
@@ -85,14 +85,14 @@ func (r *UpdateUcdnDomainResponse) Data() interface{} {
 }
 
 type UpdateUcdnDomain struct {
-	DomainId       string   // 域名ID，创建加速域名时生成。
-	SourceIps      []string `ucloud:"optional"` // 源站IP，即cdn服务器回源访问的IP地址。支持多个源站IP。多个源站IP可以表述为：SourceIps.0=1.1.1.1，SourceIps.1=2.2.2.2
-	TestUrl        string   `ucloud:"optional"` // 测试url，用于域名创建加速时的测试。
-	Areacodes      []string `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
-	CacheFileTypes []string `ucloud:"optional"` // 加速成功后需要缓存在节点服务器的静态文件类型，动态文件不支持缓存。多个文件类型，请使用：”CacheFileTypes.0=zip, CacheFileTypes.1=txt”，依赖于CacheTel参数
-	CacheUrls      []string `ucloud:"optional"` // 需要缓存的文件或路径的URL。URL支持模糊匹配，不支持正则表达式。
-	CacheTtl       int      `ucloud:"optional"` // 缓存文件或路径需要缓存的时间。单位：秒
-	NoCacheUrl     []string `ucloud:"optional"` // 不需要缓存的文件或路径。格式同CacheUrls
+	DomainId      string   // 域名ID，创建加速域名时生成。
+	SourceIp      []string `ucloud:"optional"` // 源站IP，即cdn服务器回源访问的IP地址。支持多个源站IP。多个源站IP可以表述为：SourceIps.0=1.1.1.1，SourceIps.1=2.2.2.2
+	TestUrl       string   `ucloud:"optional"` // 测试url，用于域名创建加速时的测试。
+	Areacode      []string `ucloud:"optional"` // CDN加速区域，目前区域代表有：cn：国内；abroad：国外。可选择多个区域，表述为：”Areacodes.0=cn, Areacodes.1=aboard”，表示同时使用国内和海外节点
+	CacheFileType []string `ucloud:"optional"` // 加速成功后需要缓存在节点服务器的静态文件类型，动态文件不支持缓存。多个文件类型，请使用：”CacheFileTypes.0=zip, CacheFileTypes.1=txt”，依赖于CacheTel参数
+	CacheUrl      []string `ucloud:"optional"` // 需要缓存的文件或路径的URL。URL支持模糊匹配，不支持正则表达式。
+	CacheTtl      int      `ucloud:"optional"` // 缓存文件或路径需要缓存的时间。单位：秒
+	NoCacheUrl    []string `ucloud:"optional"` // 不需要缓存的文件或路径。格式同CacheUrls
 
 }
 

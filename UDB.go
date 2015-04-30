@@ -1,16 +1,16 @@
 package ucloud
 
-// ---------------- BackupUdbInstance ------------------
+// ---------------- BackupUDBInstance ------------------
 
-type BackupUdbInstanceResponse struct {
+type BackupUDBInstanceResponse struct {
 	BaseResponse
 }
 
-func (r *BackupUdbInstanceResponse) Data() interface{} {
+func (r *BackupUDBInstanceResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type BackupUdbInstance struct {
+type BackupUDBInstance struct {
 	Region       string // 数据中心，请参见数据中心RegionList
 	DBId         string // DB实例Id
 	BackupName   string // 备份名称
@@ -18,21 +18,21 @@ type BackupUdbInstance struct {
 
 }
 
-func (r *BackupUdbInstance) R() UResponse {
-	return &BackupUdbInstanceResponse{}
+func (r *BackupUDBInstance) R() UResponse {
+	return &BackupUDBInstanceResponse{}
 }
 
-// ---------------- ClearUdbLog ------------------
+// ---------------- ClearUDBLog ------------------
 
-type ClearUdbLogResponse struct {
+type ClearUDBLogResponse struct {
 	BaseResponse
 }
 
-func (r *ClearUdbLogResponse) Data() interface{} {
+func (r *ClearUDBLogResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ClearUdbLog struct {
+type ClearUDBLog struct {
 	Region     string // 数据中心，请参见数据中心RegionList
 	DBId       string // DB实例的id
 	LogType    int    // 日志类型，10-error（暂不支持）、20-slow（暂不支持）、30-binlog
@@ -40,23 +40,23 @@ type ClearUdbLog struct {
 
 }
 
-func (r *ClearUdbLog) R() UResponse {
-	return &ClearUdbLogResponse{}
+func (r *ClearUDBLog) R() UResponse {
+	return &ClearUDBLogResponse{}
 }
 
-// ---------------- CreateUdbInstance ------------------
+// ---------------- CreateUDBInstance ------------------
 
-type CreateUdbInstanceResponse struct {
+type CreateUDBInstanceResponse struct {
 	BaseResponse
 	DBId string `json:",omitempty"` // db实例id
 
 }
 
-func (r *CreateUdbInstanceResponse) Data() interface{} {
+func (r *CreateUDBInstanceResponse) Data() interface{} {
 	return r.DBId
 }
 
-type CreateUdbInstance struct {
+type CreateUDBInstance struct {
 	Region         string // 数据中心，请参见数据中心RegionList
 	DBTypeId       string // DB类型id，mysql/mongodb按版本细分各有一个id1：mysql-5.5，2：mysql-5.1，3：percona-5.54：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6，7：percona-5.6
 	ChargeType     string `ucloud:"optional"` // Year， Month， Dynamic，Trial，默认: Dynamic
@@ -77,23 +77,23 @@ type CreateUdbInstance struct {
 
 }
 
-func (r *CreateUdbInstance) R() UResponse {
-	return &CreateUdbInstanceResponse{}
+func (r *CreateUDBInstance) R() UResponse {
+	return &CreateUDBInstanceResponse{}
 }
 
-// ---------------- CreateUdbParamGroup ------------------
+// ---------------- CreateUDBParamGroup ------------------
 
-type CreateUdbParamGroupResponse struct {
+type CreateUDBParamGroupResponse struct {
 	BaseResponse
 	GroupId int `json:",omitempty"` // 新配置参数组id
 
 }
 
-func (r *CreateUdbParamGroupResponse) Data() interface{} {
+func (r *CreateUDBParamGroupResponse) Data() interface{} {
 	return r.GroupId
 }
 
-type CreateUdbParamGroup struct {
+type CreateUDBParamGroup struct {
 	Region      string // 数据中心，请参见数据中心RegionList
 	GroupName   string // 新配置参数组名称
 	Description string // 参数组描述
@@ -102,23 +102,23 @@ type CreateUdbParamGroup struct {
 
 }
 
-func (r *CreateUdbParamGroup) R() UResponse {
-	return &CreateUdbParamGroupResponse{}
+func (r *CreateUDBParamGroup) R() UResponse {
+	return &CreateUDBParamGroupResponse{}
 }
 
-// ---------------- CreateUdbReplicationInstance ------------------
+// ---------------- CreateUDBReplicationInstance ------------------
 
-type CreateUdbReplicationInstanceResponse struct {
+type CreateUDBReplicationInstanceResponse struct {
 	BaseResponse
 	DBId string `json:",omitempty"` // 创建从节点的DBId
 
 }
 
-func (r *CreateUdbReplicationInstanceResponse) Data() interface{} {
+func (r *CreateUDBReplicationInstanceResponse) Data() interface{} {
 	return r.DBId
 }
 
-type CreateUdbReplicationInstance struct {
+type CreateUDBReplicationInstance struct {
 	Region    string // 数据中心，请参见数据中心RegionList
 	SrcId     string // primary节点的DBId
 	Name      string // 实例名称，至少6位
@@ -128,23 +128,23 @@ type CreateUdbReplicationInstance struct {
 
 }
 
-func (r *CreateUdbReplicationInstance) R() UResponse {
-	return &CreateUdbReplicationInstanceResponse{}
+func (r *CreateUDBReplicationInstance) R() UResponse {
+	return &CreateUDBReplicationInstanceResponse{}
 }
 
-// ---------------- CreateUdbSlave ------------------
+// ---------------- CreateUDBSlave ------------------
 
-type CreateUdbSlaveResponse struct {
+type CreateUDBSlaveResponse struct {
 	BaseResponse
 	DBId string `json:",omitempty"` // 创建slave的DBId
 
 }
 
-func (r *CreateUdbSlaveResponse) Data() interface{} {
+func (r *CreateUDBSlaveResponse) Data() interface{} {
 	return r.DBId
 }
 
-type CreateUdbSlave struct {
+type CreateUDBSlave struct {
 	Region   string // 数据中心，请参见数据中心RegionList
 	SrcId    string // master实例的DBId
 	Name     string // 实例名称，至少6位
@@ -155,94 +155,94 @@ type CreateUdbSlave struct {
 
 }
 
-func (r *CreateUdbSlave) R() UResponse {
-	return &CreateUdbSlaveResponse{}
+func (r *CreateUDBSlave) R() UResponse {
+	return &CreateUDBSlaveResponse{}
 }
 
-// ---------------- DeleteUdbBackup ------------------
+// ---------------- DeleteUDBBackup ------------------
 
-type DeleteUdbBackupResponse struct {
+type DeleteUDBBackupResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUdbBackupResponse) Data() interface{} {
+func (r *DeleteUDBBackupResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUdbBackup struct {
+type DeleteUDBBackup struct {
 	Region   string // 数据中心，请参见数据中心RegionList
 	BackupId int    // 备份id，可通过DescribeUDBBackup获得
 
 }
 
-func (r *DeleteUdbBackup) R() UResponse {
-	return &DeleteUdbBackupResponse{}
+func (r *DeleteUDBBackup) R() UResponse {
+	return &DeleteUDBBackupResponse{}
 }
 
-// ---------------- DeleteUdbInstance ------------------
+// ---------------- DeleteUDBInstance ------------------
 
-type DeleteUdbInstanceResponse struct {
+type DeleteUDBInstanceResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUdbInstanceResponse) Data() interface{} {
+func (r *DeleteUDBInstanceResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUdbInstance struct {
+type DeleteUDBInstance struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // DB实例的id
 
 }
 
-func (r *DeleteUdbInstance) R() UResponse {
-	return &DeleteUdbInstanceResponse{}
+func (r *DeleteUDBInstance) R() UResponse {
+	return &DeleteUDBInstanceResponse{}
 }
 
-// ---------------- DeleteUdbParamGroup ------------------
+// ---------------- DeleteUDBParamGroup ------------------
 
-type DeleteUdbParamGroupResponse struct {
+type DeleteUDBParamGroupResponse struct {
 	BaseResponse
 }
 
-func (r *DeleteUdbParamGroupResponse) Data() interface{} {
+func (r *DeleteUDBParamGroupResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type DeleteUdbParamGroup struct {
+type DeleteUDBParamGroup struct {
 	Region  string // 数据中心，请参见数据中心RegionList
 	GroupId int    // 参数组id
 
 }
 
-func (r *DeleteUdbParamGroup) R() UResponse {
-	return &DeleteUdbParamGroupResponse{}
+func (r *DeleteUDBParamGroup) R() UResponse {
+	return &DeleteUDBParamGroupResponse{}
 }
 
-// ---------------- DescribeUdbBackupBlacklist ------------------
+// ---------------- DescribeUDBBackupBlacklist ------------------
 
-type DescribeUdbBackupBlacklistResponse struct {
+type DescribeUDBBackupBlacklistResponse struct {
 	BaseResponse
 	Blacklist string `json:",omitempty"` // 黑名单
 
 }
 
-func (r *DescribeUdbBackupBlacklistResponse) Data() interface{} {
+func (r *DescribeUDBBackupBlacklistResponse) Data() interface{} {
 	return r.Blacklist
 }
 
-type DescribeUdbBackupBlacklist struct {
+type DescribeUDBBackupBlacklist struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // DB实例Id
 
 }
 
-func (r *DescribeUdbBackupBlacklist) R() UResponse {
-	return &DescribeUdbBackupBlacklistResponse{}
+func (r *DescribeUDBBackupBlacklist) R() UResponse {
+	return &DescribeUDBBackupBlacklistResponse{}
 }
 
-// ---------------- DescribeUdbBackup ------------------
-type DescribeUdbBackupDataSet struct {
+// ---------------- DescribeUDBBackup ------------------
+type DescribeUDBBackupDataSet struct {
 	BackupId   int    // 备份id
 	BackupName string // 备份名称
 	BackupTime int    // 备份时间
@@ -253,18 +253,18 @@ type DescribeUdbBackupDataSet struct {
 	DBName     string // 对应的db名称
 }
 
-type DescribeUdbBackupResponse struct {
+type DescribeUDBBackupResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbBackupDataSet `json:",omitempty"` // 备份信息
+	DataSet    []*DescribeUDBBackupDataSet `json:",omitempty"` // 备份信息
 	TotalCount int                         `json:",omitempty"` // 备份总数，如果指定dbid，则是该db备份总数
 
 }
 
-func (r *DescribeUdbBackupResponse) Data() interface{} {
+func (r *DescribeUDBBackupResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdbBackup struct {
+type DescribeUDBBackup struct {
 	Region     string // 数据中心，请参见数据中心RegionList
 	Offset     int    // 分页显示的起始偏移，列表操作则指定
 	Limit      int    // 分页显示的条目数，列表操作则指定
@@ -275,27 +275,27 @@ type DescribeUdbBackup struct {
 
 }
 
-func (r *DescribeUdbBackup) R() UResponse {
-	return &DescribeUdbBackupResponse{}
+func (r *DescribeUDBBackup) R() UResponse {
+	return &DescribeUDBBackupResponse{}
 }
 
-// ---------------- DescribeUdbInstancePrice ------------------
-type DescribeUdbInstancePriceDataSet struct {
+// ---------------- DescribeUDBInstancePrice ------------------
+type DescribeUDBInstancePriceDataSet struct {
 	ChargeType string  // Year， Month， Dynamic，Trial
 	Price      float64 // 价格，单位分
 }
 
-type DescribeUdbInstancePriceResponse struct {
+type DescribeUDBInstancePriceResponse struct {
 	BaseResponse
-	DataSet []*DescribeUdbInstancePriceDataSet `json:",omitempty"` // 价格
+	DataSet []*DescribeUDBInstancePriceDataSet `json:",omitempty"` // 价格
 
 }
 
-func (r *DescribeUdbInstancePriceResponse) Data() interface{} {
+func (r *DescribeUDBInstancePriceResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdbInstancePrice struct {
+type DescribeUDBInstancePrice struct {
 	Region      string // 数据中心，请参见数据中心RegionList
 	Count       int    // 购买DB实例数量
 	ChargeType  string `ucloud:"optional"` // Year， Month， Dynamic，Trial，默认: Dynamic如果不指定，则一次性获取三种计费
@@ -306,12 +306,12 @@ type DescribeUdbInstancePrice struct {
 
 }
 
-func (r *DescribeUdbInstancePrice) R() UResponse {
-	return &DescribeUdbInstancePriceResponse{}
+func (r *DescribeUDBInstancePrice) R() UResponse {
+	return &DescribeUDBInstancePriceResponse{}
 }
 
-// ---------------- DescribeUdbInstance ------------------
-type DescribeUdbInstanceDataSet struct {
+// ---------------- DescribeUDBInstance ------------------
+type DescribeUDBInstanceDataSet struct {
 	DBId            string                        // DB实例id
 	Name            string                        // 实例名称，至少6位
 	DBTypeId        string                        // DB类型id，mysql/mongodb按版本细分各有一个id1：mysql-5.5，2：mysql-5.1，3：percona-5.54：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6，7：percona-5.6
@@ -338,21 +338,21 @@ type DescribeUdbInstanceDataSet struct {
 	DataFileSize    int                           // DB实例数据文件大小，单位GB
 	SystemFileSize  int                           // DB实例系统文件大小，单位GB
 	LogFileSize     int                           // DB实例日志文件大小，单位GB
-	DataSet         []*DescribeUdbInstanceDataSet // 如果列表操作，则有从DB实例信息列表
+	DataSet         []*DescribeUDBInstanceDataSet // 如果列表操作，则有从DB实例信息列表
 }
 
-type DescribeUdbInstanceResponse struct {
+type DescribeUDBInstanceResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbInstanceDataSet `json:",omitempty"` // DB实例信息列表
+	DataSet    []*DescribeUDBInstanceDataSet `json:",omitempty"` // DB实例信息列表
 	TotalCount int                           `json:",omitempty"` // 用户db组的数量，对于mysql: 主从结对数量，没有slave，则只有master mongodb: 副本集数量
 
 }
 
-func (r *DescribeUdbInstanceResponse) Data() interface{} {
+func (r *DescribeUDBInstanceResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdbInstance struct {
+type DescribeUDBInstance struct {
 	Region    string // 数据中心，请参见数据中心RegionList
 	DBId      string `ucloud:"optional"` // DB实例id，如果指定则获取描述，否则为列表操作，指定Offset/Limit
 	ClassType string `ucloud:"optional"` // DB种类，分为SQL和NOSQL，如果是别表操作，则需要制定
@@ -361,33 +361,33 @@ type DescribeUdbInstance struct {
 
 }
 
-func (r *DescribeUdbInstance) R() UResponse {
-	return &DescribeUdbInstanceResponse{}
+func (r *DescribeUDBInstance) R() UResponse {
+	return &DescribeUDBInstanceResponse{}
 }
 
-// ---------------- DescribeUdbInstanceState ------------------
+// ---------------- DescribeUDBInstanceState ------------------
 
-type DescribeUdbInstanceStateResponse struct {
+type DescribeUDBInstanceStateResponse struct {
 	BaseResponse
 	State string `json:",omitempty"` // DB状态标记 Init          // 初始化中 Fail              // 安装失败 Starting          // 启动中 Running           // 运行 Shutdown          // 关闭中 Shutoff           // 已关闭 Delete            // 已删除 Upgrading         // 升级中 Promoting         // 提升为独库进行中 Recovering        // 恢复中 Recover    fail   // 恢复失败
 }
 
-func (r *DescribeUdbInstanceStateResponse) Data() interface{} {
+func (r *DescribeUDBInstanceStateResponse) Data() interface{} {
 	return r.State
 }
 
-type DescribeUdbInstanceState struct {
+type DescribeUDBInstanceState struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // 实例的Id
 
 }
 
-func (r *DescribeUdbInstanceState) R() UResponse {
-	return &DescribeUdbInstanceStateResponse{}
+func (r *DescribeUDBInstanceState) R() UResponse {
+	return &DescribeUDBInstanceStateResponse{}
 }
 
-// ---------------- DescribeUdbParamGroup ------------------
-type DescribeUdbParamGroupDataSet struct {
+// ---------------- DescribeUDBParamGroup ------------------
+type DescribeUDBParamGroupDataSet struct {
 	GroupId     int            // 参数组id
 	GroupName   string         // 参数组名称
 	DBTypeId    string         // DB类型id，mysql/mongodb按版本细分各有一个id1：mysql-5.5，2：mysql-5.1，3：percona-5.54：mongodb-2.4，5：mongodb-2.6，6：mysql-5.67：percona-5.6
@@ -405,18 +405,18 @@ type ParamMember struct {
 	FormatType int    // 允许值得格式类型，包括PVFT_UNKOWN=0,PVFT_RANGE=10, PVFT_ENUM=20
 }
 
-type DescribeUdbParamGroupResponse struct {
+type DescribeUDBParamGroupResponse struct {
 	BaseResponse
-	DataSet    []*DescribeUdbParamGroupDataSet `json:",omitempty"` // 参数组
+	DataSet    []*DescribeUDBParamGroupDataSet `json:",omitempty"` // 参数组
 	TotalCount int                             `json:",omitempty"` // 参数组总数，列表操作时才会有该参数
 
 }
 
-func (r *DescribeUdbParamGroupResponse) Data() interface{} {
+func (r *DescribeUDBParamGroupResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdbParamGroup struct {
+type DescribeUDBParamGroup struct {
 	Region  string // 数据中心，请参见数据中心RegionList
 	GroupId int    `ucloud:"optional"` // 参数组id，如果指定则获取描述，否则是列表操作，需要指定Offset/Limit
 	Offset  int    `ucloud:"optional"` // 分页显示的起始偏移，列表操作则指定
@@ -424,168 +424,168 @@ type DescribeUdbParamGroup struct {
 
 }
 
-func (r *DescribeUdbParamGroup) R() UResponse {
-	return &DescribeUdbParamGroupResponse{}
+func (r *DescribeUDBParamGroup) R() UResponse {
+	return &DescribeUDBParamGroupResponse{}
 }
 
-// ---------------- DescribeUdbType ------------------
-type DescribeUdbTypeDataSet struct {
+// ---------------- DescribeUDBType ------------------
+type DescribeUDBTypeDataSet struct {
 	DBTypeId string // DB类型id，mysql/mongodb按版本细分各有一个id1：mysql-5.5，2：mysql-5.1，3：percona-5.54：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6，7：percona-5.6
 }
 
-type DescribeUdbTypeResponse struct {
+type DescribeUDBTypeResponse struct {
 	BaseResponse
-	DataSet []*DescribeUdbTypeDataSet `json:",omitempty"` // DB类型列表
+	DataSet []*DescribeUDBTypeDataSet `json:",omitempty"` // DB类型列表
 
 }
 
-func (r *DescribeUdbTypeResponse) Data() interface{} {
+func (r *DescribeUDBTypeResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeUdbType struct {
+type DescribeUDBType struct {
 	Region string // 数据中心，请参见数据中心RegionList
 
 }
 
-func (r *DescribeUdbType) R() UResponse {
-	return &DescribeUdbTypeResponse{}
+func (r *DescribeUDBType) R() UResponse {
+	return &DescribeUDBTypeResponse{}
 }
 
-// ---------------- EditUdbBackupBlacklist ------------------
+// ---------------- EditUDBBackupBlacklist ------------------
 
-type EditUdbBackupBlacklistResponse struct {
+type EditUDBBackupBlacklistResponse struct {
 	BaseResponse
 }
 
-func (r *EditUdbBackupBlacklistResponse) Data() interface{} {
+func (r *EditUDBBackupBlacklistResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type EditUdbBackupBlacklist struct {
+type EditUDBBackupBlacklist struct {
 	Region    string // 数据中心，请参见数据中心RegionList
 	DBId      string // DB实例Id
 	Blacklist string // 黑名单，规范示例abc.%;user.%;city.address;
 
 }
 
-func (r *EditUdbBackupBlacklist) R() UResponse {
-	return &EditUdbBackupBlacklistResponse{}
+func (r *EditUDBBackupBlacklist) R() UResponse {
+	return &EditUDBBackupBlacklistResponse{}
 }
 
-// ---------------- ModifyUdbInstanceName ------------------
+// ---------------- ModifyUDBInstanceName ------------------
 
-type ModifyUdbInstanceNameResponse struct {
+type ModifyUDBInstanceNameResponse struct {
 	BaseResponse
 }
 
-func (r *ModifyUdbInstanceNameResponse) Data() interface{} {
+func (r *ModifyUDBInstanceNameResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ModifyUdbInstanceName struct {
+type ModifyUDBInstanceName struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // 实例的Id
 	Name   string // 实例的新名字
 
 }
 
-func (r *ModifyUdbInstanceName) R() UResponse {
-	return &ModifyUdbInstanceNameResponse{}
+func (r *ModifyUDBInstanceName) R() UResponse {
+	return &ModifyUDBInstanceNameResponse{}
 }
 
-// ---------------- PromoteUdbSlave ------------------
+// ---------------- PromoteUDBSlave ------------------
 
-type PromoteUdbSlaveResponse struct {
+type PromoteUDBSlaveResponse struct {
 	BaseResponse
 }
 
-func (r *PromoteUdbSlaveResponse) Data() interface{} {
+func (r *PromoteUDBSlaveResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type PromoteUdbSlave struct {
+type PromoteUDBSlave struct {
 	Region  string // 数据中心，请参见数据中心RegionList
 	DBId    string // 实例的Id
 	IsForce bool   `ucloud:"optional"` // 是否强制(如果从库落后可能会禁止提升)，默认false如果落后情况下，强制提升丢失数据
 
 }
 
-func (r *PromoteUdbSlave) R() UResponse {
-	return &PromoteUdbSlaveResponse{}
+func (r *PromoteUDBSlave) R() UResponse {
+	return &PromoteUDBSlaveResponse{}
 }
 
-// ---------------- RestartUdbInstance ------------------
+// ---------------- RestartUDBInstance ------------------
 
-type RestartUdbInstanceResponse struct {
+type RestartUDBInstanceResponse struct {
 	BaseResponse
 }
 
-func (r *RestartUdbInstanceResponse) Data() interface{} {
+func (r *RestartUDBInstanceResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type RestartUdbInstance struct {
+type RestartUDBInstance struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // 实例的Id
 
 }
 
-func (r *RestartUdbInstance) R() UResponse {
-	return &RestartUdbInstanceResponse{}
+func (r *RestartUDBInstance) R() UResponse {
+	return &RestartUDBInstanceResponse{}
 }
 
-// ---------------- StartUdbInstance ------------------
+// ---------------- StartUDBInstance ------------------
 
-type StartUdbInstanceResponse struct {
+type StartUDBInstanceResponse struct {
 	BaseResponse
 }
 
-func (r *StartUdbInstanceResponse) Data() interface{} {
+func (r *StartUDBInstanceResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type StartUdbInstance struct {
+type StartUDBInstance struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // 实例的Id
 
 }
 
-func (r *StartUdbInstance) R() UResponse {
-	return &StartUdbInstanceResponse{}
+func (r *StartUDBInstance) R() UResponse {
+	return &StartUDBInstanceResponse{}
 }
 
-// ---------------- StopUdbInstance ------------------
+// ---------------- StopUDBInstance ------------------
 
-type StopUdbInstanceResponse struct {
+type StopUDBInstanceResponse struct {
 	BaseResponse
 }
 
-func (r *StopUdbInstanceResponse) Data() interface{} {
+func (r *StopUDBInstanceResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type StopUdbInstance struct {
+type StopUDBInstance struct {
 	Region string // 数据中心，请参见数据中心RegionList
 	DBId   string // 实例的Id
 
 }
 
-func (r *StopUdbInstance) R() UResponse {
-	return &StopUdbInstanceResponse{}
+func (r *StopUDBInstance) R() UResponse {
+	return &StopUDBInstanceResponse{}
 }
 
-// ---------------- UpdateUdbParamGroup ------------------
+// ---------------- UpdateUDBParamGroup ------------------
 
-type UpdateUdbParamGroupResponse struct {
+type UpdateUDBParamGroupResponse struct {
 	BaseResponse
 }
 
-func (r *UpdateUdbParamGroupResponse) Data() interface{} {
+func (r *UpdateUDBParamGroupResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type UpdateUdbParamGroup struct {
+type UpdateUDBParamGroup struct {
 	Region  string // 数据中心，请参见数据中心RegionList
 	GroupId int    // 配置参数组id，使用DescribeUDBParamGroup获得
 	Key     string // 参数名称
@@ -593,23 +593,23 @@ type UpdateUdbParamGroup struct {
 
 }
 
-func (r *UpdateUdbParamGroup) R() UResponse {
-	return &UpdateUdbParamGroupResponse{}
+func (r *UpdateUDBParamGroup) R() UResponse {
+	return &UpdateUDBParamGroupResponse{}
 }
 
-// ---------------- UploadUdbParamGroup ------------------
+// ---------------- UploadUDBParamGroup ------------------
 
-type UploadUdbParamGroupResponse struct {
+type UploadUDBParamGroupResponse struct {
 	BaseResponse
 	GroupId int `json:",omitempty"` // 配置参数组id
 
 }
 
-func (r *UploadUdbParamGroupResponse) Data() interface{} {
+func (r *UploadUDBParamGroupResponse) Data() interface{} {
 	return r.GroupId
 }
 
-type UploadUdbParamGroup struct {
+type UploadUDBParamGroup struct {
 	Region      string // 数据中心，请参见数据中心RegionList
 	DBTypeId    string // DB类型id，mysql/mongodb按版本细分各有一个id1：mysql-5.5，2：mysql-5.1，3：percona-5.54：mongodb-2.4，5：mongodb-2.6，6：mysql-5.6，7：percona-5.6
 	GroupName   string // 配置参数组名称
@@ -618,6 +618,6 @@ type UploadUdbParamGroup struct {
 
 }
 
-func (r *UploadUdbParamGroup) R() UResponse {
-	return &UploadUdbParamGroupResponse{}
+func (r *UploadUDBParamGroup) R() UResponse {
+	return &UploadUDBParamGroupResponse{}
 }
