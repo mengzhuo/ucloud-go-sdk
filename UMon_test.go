@@ -1,22 +1,22 @@
 package ucloud
 
 import (
-	_ "fmt"
-	_ "testing"
+	"fmt"
+	"testing"
 )
 
-/*
+// ---------------- TestGetMetric ------------------
 func TestGetMetric(t *testing.T) {
-
-	g := GetMetric{Region: "cn-east-01",
-		MetricName:   []string{"NetworkOut", "TotalNetworkOut"},
-		ResourceId:   "uhost-ahdvfh",
-		ResourceType: "uhost"}
-	rsp, err := u.Do(&g)
-	if err != nil || !rsp.OK() {
-		t.Fatal(err, rsp)
+	fmt.Println("UMon....")
+	r := &GetMetric{ResourceType: "ulb",
+		ResourceId: "ulb-kix4tp",
+		Region:     "1",
+		TimeRange:  300,
+		MetricName: []string{"NetworkOut", "TotalNetworkOut"},
 	}
-	data := rsp.Data().(map[string]*GetMetricItem)
-	fmt.Println(data["NetworkOut"])
+	cmp := `https://api.ucloud.cn/?Action=GetMetric&Region=1&MetricName.0=NetworkOut&MetricName.1=TotalNetworkOut&ResourceType=ulb&ResourceId=ulb-kix4tp&TimeRange=300`
+
+	if err := FakeGetAndCmp(r, cmp); err != nil {
+		t.Fatal(err)
+	}
 }
-*/
