@@ -22,8 +22,7 @@ func Test${struct_name}(t *testing.T) {
 
 """
 
-def make(url):
-    struct_name = url.rpartition("/")[-1].split(".")[0].title().replace("_", '')
+def make(url, struct_name):
     data = requests.get(url).content
     p = bs4.BeautifulSoup(data)
     # Request
@@ -49,7 +48,7 @@ def search_for_url(url):
     node = bs4.BeautifulSoup(requests.get(url).content)
     url_list = []
     for a in node.select(".compound .internal"):
-        url_list.append(last+"/"+a.get("href"))
+        url_list.append((last+"/"+a.get("href"), a.text))
     return url_list
 
 if __name__ == '__main__':
@@ -59,7 +58,7 @@ if __name__ == '__main__':
     
     with open(filepath, "w+") as f:
         f.write('package ucloud\nimport ("testing")\n')
-        for u in search_for_url(url):
-            print "Loading:" , u, 
-            f.write(make(u).encode("utf8"))
+        for u,s in search_for_url(url):
+            print "Loading:" ,s, u, 
+            f.write(make(u, s).encode("utf8"))
             print "......Done"
