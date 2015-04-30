@@ -1,6 +1,6 @@
 package ucloud
 
-// ---------------- AllocateEip ------------------
+// ---------------- AllocateEIP ------------------
 type EIPSet struct {
 	EIPId   string     // 申请到的EIP资源ID
 	EIPAddr []*EIPAddr // 申请到的IPv4地址（双线拥有两个IP地址）
@@ -10,17 +10,17 @@ type EIPAddr struct {
 	IP           string // IP地址
 }
 
-type AllocateEipResponse struct {
+type AllocateEIPResponse struct {
 	BaseResponse
 	EIPSet []*EIPSet `json:",omitempty"` // 申请到的EIP资源详情
 
 }
 
-func (r *AllocateEipResponse) Data() interface{} {
+func (r *AllocateEIPResponse) Data() interface{} {
 	return r.EIPSet
 }
 
-type AllocateEip struct {
+type AllocateEIP struct {
 	Region       string // 数据中心，参见 数据中心列表
 	OperatorName string // 弹性IP的线路如下:电信: Telecom联通: Unicom国际: InternationalBGP: Bgp双线: Duplet各数据中心允许的线路参数如下：cn-east-01: Telecom, Unicom, Dupletcn-south-01: Telecom, Unicom, Dupletcn-north-01: Bgpcn-north-02: Bgpcn-north-03: Bgphk-01: Internationalus-west-01: International
 	Bandwidth    int    // 弹性IP的外网带宽，单位为Mbps，范围 [0-800]；共享带宽模式必须指定0M带宽，非共享带宽模式必须指定非0M带宽
@@ -29,11 +29,11 @@ type AllocateEip struct {
 
 }
 
-func (r *AllocateEip) R() UResponse {
-	return &AllocateEipResponse{}
+func (r *AllocateEIP) R() UResponse {
+	return &AllocateEIPResponse{}
 }
 
-// ---------------- DescribeEip ------------------
+// ---------------- DescribeEIP ------------------
 type DescribeEIPSet struct {
 	EIPId         string             // 弹性IP的资源ID
 	Weight        int                // 外网出口权重，默认为50，范围[0-100]
@@ -56,18 +56,18 @@ type DescribeEIPAddr struct {
 	IP           string // 弹性IP地址
 }
 
-type DescribeEipResponse struct {
+type DescribeEIPResponse struct {
 	BaseResponse
 	TotalCount int               `json:",omitempty"` // 满足条件的弹性IP总数
 	EIPSet     []*DescribeEIPSet `json:",omitempty"` // 弹性IP列表，每项参数详见DataSet
 
 }
 
-func (r *DescribeEipResponse) Data() interface{} {
+func (r *DescribeEIPResponse) Data() interface{} {
 	return r.EIPSet
 }
 
-type DescribeEip struct {
+type DescribeEIP struct {
 	Region string   // 数据中心，参见 数据中心列表
 	EIPIds []string `ucloud:"optional"` // 弹性IP的资源ID如果为空，则返回当前Region中符合条件的的所有EIP
 	Offset int      `ucloud:"optional"` // 数据偏移量，默认为0
@@ -75,41 +75,64 @@ type DescribeEip struct {
 
 }
 
-func (r *DescribeEip) R() UResponse {
-	return &DescribeEipResponse{}
+func (r *DescribeEIP) R() UResponse {
+	return &DescribeEIPResponse{}
 }
 
-// ---------------- ReleaseEip ------------------
+// ---------------- UpdateEIPAttribute ------------------
 
-type ReleaseEipResponse struct {
+type UpdateEIPAttributeResponse struct {
 	BaseResponse
 }
 
-func (r *ReleaseEipResponse) Data() interface{} {
+func (r *UpdateEIPAttributeResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ReleaseEip struct {
+type UpdateEIPAttribute struct {
+	Region string // 数据中心，参见 数据中心列表
+	EIPId  string // EIP资源ID
+	Name   string `ucloud:"optional"` // 名字（Name Tag Remark都为空则报错）
+	Tag    string `ucloud:"optional"` // 弹性IP的业务组标识
+	Remark string `ucloud:"optional"` // 弹性IP的备注信息
+
+}
+
+func (r *UpdateEIPAttribute) R() UResponse {
+	return &UpdateEIPAttributeResponse{}
+}
+
+// ---------------- ReleaseEIP ------------------
+
+type ReleaseEIPResponse struct {
+	BaseResponse
+}
+
+func (r *ReleaseEIPResponse) Data() interface{} {
+	return r.RetCode
+}
+
+type ReleaseEIP struct {
 	Region string // 数据中心，参见 数据中心列表
 	EIPId  string // 弹性IP的资源ID
 
 }
 
-func (r *ReleaseEip) R() UResponse {
-	return &ReleaseEipResponse{}
+func (r *ReleaseEIP) R() UResponse {
+	return &ReleaseEIPResponse{}
 }
 
-// ---------------- BindEip ------------------
+// ---------------- BindEIP ------------------
 
-type BindEipResponse struct {
+type BindEIPResponse struct {
 	BaseResponse
 }
 
-func (r *BindEipResponse) Data() interface{} {
+func (r *BindEIPResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type BindEip struct {
+type BindEIP struct {
 	Region       string // 数据中心，参见 数据中心列表
 	EIPId        string // 弹性IP的资源Id
 	ResourceType string // 弹性IP请求绑定的资源类型，枚举值为：uhost：云主机；vrouter：虚拟路由器；ulb，负载均衡器
@@ -117,21 +140,21 @@ type BindEip struct {
 
 }
 
-func (r *BindEip) R() UResponse {
-	return &BindEipResponse{}
+func (r *BindEIP) R() UResponse {
+	return &BindEIPResponse{}
 }
 
-// ---------------- UnbindEip ------------------
+// ---------------- UnBindEIP ------------------
 
-type UnbindEipResponse struct {
+type UnBindEIPResponse struct {
 	BaseResponse
 }
 
-func (r *UnbindEipResponse) Data() interface{} {
+func (r *UnBindEIPResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type UnbindEip struct {
+type UnBindEIP struct {
 	Region       string // 数据中心，参见 数据中心列表
 	EIPId        string // 弹性IP的资源Id
 	ResourceType string // 弹性IP请求解绑的资源类型，枚举值为：uhost：云主机；vrouter：虚拟路由器；ulb，负载均衡器
@@ -139,70 +162,70 @@ type UnbindEip struct {
 
 }
 
-func (r *UnbindEip) R() UResponse {
-	return &UnbindEipResponse{}
+func (r *UnBindEIP) R() UResponse {
+	return &UnBindEIPResponse{}
 }
 
-// ---------------- ModifyEipBandwidth ------------------
+// ---------------- ModifyEIPBandwidth ------------------
 
-type ModifyEipBandwidthResponse struct {
+type ModifyEIPBandwidthResponse struct {
 	BaseResponse
 }
 
-func (r *ModifyEipBandwidthResponse) Data() interface{} {
+func (r *ModifyEIPBandwidthResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ModifyEipBandwidth struct {
+type ModifyEIPBandwidth struct {
 	Region    string // 数据中心，参见 数据中心列表
 	EIPId     string // 弹性IP的资源ID
 	Bandwidth int    // 弹性IP的外网带宽，单位为Mbps，范围 [0-800]
 
 }
 
-func (r *ModifyEipBandwidth) R() UResponse {
-	return &ModifyEipBandwidthResponse{}
+func (r *ModifyEIPBandwidth) R() UResponse {
+	return &ModifyEIPBandwidthResponse{}
 }
 
-// ---------------- ModifyEipWeight ------------------
+// ---------------- ModifyEIPWeight ------------------
 
-type ModifyEipWeightResponse struct {
+type ModifyEIPWeightResponse struct {
 	BaseResponse
 }
 
-func (r *ModifyEipWeightResponse) Data() interface{} {
+func (r *ModifyEIPWeightResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ModifyEipWeight struct {
+type ModifyEIPWeight struct {
 	Region string // 数据中心，参见 数据中心列表
 	EIPId  string // 弹性IP的资源ID
 	Weight int    // 外网出口权重，范围[0-100]
 
 }
 
-func (r *ModifyEipWeight) R() UResponse {
-	return &ModifyEipWeightResponse{}
+func (r *ModifyEIPWeight) R() UResponse {
+	return &ModifyEIPWeightResponse{}
 }
 
-// ---------------- GetEipPrice ------------------
-type GetEipPriceSet struct {
+// ---------------- GetEIPPrice ------------------
+type GetEIPPriceSet struct {
 	ChargeType    string  // 弹性IP计费类型
 	Price         float64 // 弹性IP价格
 	PurchaseValue int     // 资源有效期，以Unix Timestamp表示
 }
 
-type GetEipPriceResponse struct {
+type GetEIPPriceResponse struct {
 	BaseResponse
-	PriceSet []*GetEipPriceSet `json:",omitempty"` // 弹性IP价格详情
+	PriceSet []*GetEIPPriceSet `json:",omitempty"` // 弹性IP价格详情
 
 }
 
-func (r *GetEipPriceResponse) Data() interface{} {
+func (r *GetEIPPriceResponse) Data() interface{} {
 	return r.PriceSet
 }
 
-type GetEipPrice struct {
+type GetEIPPrice struct {
 	Region       string // 数据中心，参见 数据中心列表
 	OperatorName string // 弹性IP的线路如下:电信: Telecom联通: Unicom国际: InternationalBGP: Bgp双线: Duplet各数据中心允许的线路参数如下：cn-east-01: Telecom, Unicom, Dupletcn-south-01: Telecom, Unicom, Dupletcn-north-01: Bgpcn-north-02: Bgpcn-north-03: Bgphk-01: Internationalus-west-01: International
 	Bandwidth    int    // 弹性IP的外网带宽，单位为Mbps，范围 [0-800]；
@@ -210,71 +233,71 @@ type GetEipPrice struct {
 
 }
 
-func (r *GetEipPrice) R() UResponse {
-	return &GetEipPriceResponse{}
+func (r *GetEIPPrice) R() UResponse {
+	return &GetEIPPriceResponse{}
 }
 
-// ---------------- AllocateVip ------------------
+// ---------------- AllocateVIP ------------------
 
-type AllocateVipResponse struct {
+type AllocateVIPResponse struct {
 	BaseResponse
 	DataSet []string `json:",omitempty"` // 申请到的VIP资源地址
 
 }
 
-func (r *AllocateVipResponse) Data() interface{} {
+func (r *AllocateVIPResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type AllocateVip struct {
+type AllocateVIP struct {
 	Region string // 数据中心，参见 数据中心列表
 	Count  int    `ucloud:"optional"` // 申请数量，默认: 1
 
 }
 
-func (r *AllocateVip) R() UResponse {
-	return &AllocateVipResponse{}
+func (r *AllocateVIP) R() UResponse {
+	return &AllocateVIPResponse{}
 }
 
-// ---------------- DescribeVip ------------------
+// ---------------- DescribeVIP ------------------
 
-type DescribeVipResponse struct {
+type DescribeVIPResponse struct {
 	BaseResponse
 	DataSet []string `json:",omitempty"` // 内网VIP地址列表
 
 }
 
-func (r *DescribeVipResponse) Data() interface{} {
+func (r *DescribeVIPResponse) Data() interface{} {
 	return r.DataSet
 }
 
-type DescribeVip struct {
+type DescribeVIP struct {
 	Region string // 数据中心，参见 数据中心列表
 
 }
 
-func (r *DescribeVip) R() UResponse {
-	return &DescribeVipResponse{}
+func (r *DescribeVIP) R() UResponse {
+	return &DescribeVIPResponse{}
 }
 
-// ---------------- ReleaseVip ------------------
+// ---------------- ReleaseVIP ------------------
 
-type ReleaseVipResponse struct {
+type ReleaseVIPResponse struct {
 	BaseResponse
 }
 
-func (r *ReleaseVipResponse) Data() interface{} {
+func (r *ReleaseVIPResponse) Data() interface{} {
 	return r.RetCode
 }
 
-type ReleaseVip struct {
+type ReleaseVIP struct {
 	Region string // 数据中心，参见 数据中心列表
 	VIP    string // 内网VIP的IP地址
 
 }
 
-func (r *ReleaseVip) R() UResponse {
-	return &ReleaseVipResponse{}
+func (r *ReleaseVIP) R() UResponse {
+	return &ReleaseVIPResponse{}
 }
 
 // ---------------- DescribeSecurityGroup ------------------
@@ -348,15 +371,16 @@ func (r *CreateSecurityGroupResponse) Data() interface{} {
 }
 
 type CreateSecurityGroup struct {
-	Region      string   // 数据中心，参见 数据中心列表
-	GroupName   string   // 防火墙组名称
-	Description string   `ucloud:"optional"` // 防火墙组描述
-	Rule        []string // 防火墙规则，格式如下：
-	Proto       string   // 网络协议，枚举值为：TCP，UDP，ICMP，GRE
-	Dst_port    string   // 目标端口，范围：[1-65535]，可指定单个端口（如80），或指定端口段（1-1024）
-	Src_ip      string   // 源地址，格式为’x.x.x.x/x 或 x.x.x.x’的有效IP地址。
-	Action      string   // 防火墙动作，枚举值为：ACCEPT：允许通过防火墙；DROP：禁止通过防火墙并不给任何返回信息
-	Priority    int      // 规则优先级，枚举值为：0（高），50（中），100（低）
+	Region      string // 数据中心，参见 数据中心列表
+	GroupName   string // 防火墙组名称
+	Description string `ucloud:"optional"` // 防火墙组描述
+	Rule        []string
+	// 防火墙规则，格式如下：
+	// 网络协议，枚举值为：TCP，UDP，ICMP，GRE
+	// 目标端口，范围：[1-65535]，可指定单个端口（如80），或指定端口段（1-1024）
+	// 源地址，格式为’x.x.x.x/x 或 x.x.x.x’的有效IP地址。
+	// 防火墙动作，枚举值为：ACCEPT：允许通过防火墙；DROP：禁止通过防火墙并不给任何返回信息
+	// 规则优先级，枚举值为：0（高），50（中），100（低）
 
 }
 
@@ -375,14 +399,14 @@ func (r *UpdateSecurityGroupResponse) Data() interface{} {
 }
 
 type UpdateSecurityGroup struct {
-	Region   string   // 数据中心，参见 数据中心列表
-	GroupId  string   // 防火墙资源ID
-	Rule     []string // 防火墙规则，格式如下
-	Proto    string   // 网络协议，枚举值为：TCP，UDP，ICMP，GRE
-	Dst_port string   // 目标端口，范围：[1-65535]，可指定单个端口（如80），或指定端口段（1-1024）
-	Src_ip   string   // 源地址，格式为’x.x.x.x/x 或 x.x.x.x’的有效IP地址。
-	Action   string   // 防火墙动作，枚举值为：ACCEPT：允许通过防火墙；DROP：禁止通过防火墙并不给任何返回信息
-	Priority int      // 规则优先级，枚举值为：0（高），50（中），100（低）
+	Region  string   // 数据中心，参见 数据中心列表
+	GroupId string   // 防火墙资源ID
+	Rule    []string // 防火墙规则，格式如下
+	// 网络协议，枚举值为：TCP，UDP，ICMP，GRE
+	// 目标端口，范围：[1-65535]，可指定单个端口（如80），或指定端口段（1-1024）
+	// 源地址，格式为’x.x.x.x/x 或 x.x.x.x’的有效IP地址。
+	// 防火墙动作，枚举值为：ACCEPT：允许通过防火墙；DROP：禁止通过防火墙并不给任何返回信息
+	// 规则优先级，枚举值为：0（高），50（中），100（低）
 
 }
 

@@ -4,6 +4,7 @@
 import requests
 import bs4
 import sys
+import urlparse
 from string import Template
 
 
@@ -26,12 +27,22 @@ def make(url):
     data = requests.get(url).content
     p = bs4.BeautifulSoup(data)
     # Request
+    cmp_uri = p.find("div", {"id":"request-example"}).find("pre").text.replace("\n", "").replace("(s)", "s")
     
+    mandatory_params = ""
+    params = urlparse.parse_qs(cmp_uri)
+    for k, v in params.items():
+        if k != "https://api.ucloud.cn/?Action":
+            vv = v[0]
+            if not vv.isdigit():
+                vv = '"%s"' % vv
 
-    return Template(tpl).substitute(sub_elem = sub_elem,
+            print k,":=", vv
+            mandatory_params += '%s:%s,\n' % (k, vv )
+
+    return Template(tpl).substitute(mandatory_params= mandatory_params,
                                     struct_name=struct_name, 
-                                    request_parameters=request_parameters, 
-                                    response_parameters=response_parameters)
+                                    cmp_uri=cmp_uri)
 
 def search_for_url(url):
     last = url.rpartition("/")[0]
@@ -47,7 +58,7 @@ if __name__ == '__main__':
     filepath = sys.argv[2]
     
     with open(filepath, "w+") as f:
-        f.write("package ucloud\nimport testing\n")
+        f.write('package ucloud\nimport ("testing")\n')
         for u in search_for_url(url):
             print "Loading:" , u, 
             f.write(make(u).encode("utf8"))

@@ -17,15 +17,17 @@ func FakeGetAndCmp(req URequest, cmp string) error {
 	}
 	uri := u.MakeURI("/", params)
 
-	raw_uri, err := url.Parse(uri)
+	gen_uri, err := url.Parse(uri)
 	cmp_uri, err := url.Parse(cmp)
 	if err != nil {
 		return err
 	}
 
 	for k, v := range cmp_uri.Query() {
-		if raw_uri.Query().Get(k) != v[0] {
-			return fmt.Errorf("%v FAILED at %s \n Cmp:%s != Gen:%s !!!", req, k, v[0], raw_uri.Query().Get(k))
+		gen := gen_uri.Query().Get(k)
+		cmp := v[0]
+		if cmp != gen {
+			return fmt.Errorf("%v FAILED at %s \n Generated:%#v\n  Original:%#v", req, k, gen, cmp)
 		}
 	}
 	return nil
