@@ -1,28 +1,5 @@
 package ucloud
 
-// ---------------- AttachUdisk ------------------
-
-type AttachUdiskResponse struct {
-	BaseResponse
-	UHostId string `json:"omitempty"` // 挂载的UHost实例ID
-	UDiskId string `json:"omitempty"` // 挂载的UDisk实例ID
-
-}
-
-func (r *AttachUdiskResponse) Data() interface{} {
-	return struct {
-		UHostId string
-		UDiskId string
-	}{r.UHostId, r.UHostId}
-}
-
-type AttachUdisk struct {
-}
-
-func (r *AttachUdisk) R() UResponse {
-	return &AttachUdiskResponse{}
-}
-
 // ---------------- CreateUdiskSnapshot ------------------
 
 type CreateUdiskSnapshotResponse struct {
@@ -239,31 +216,6 @@ type DescribeUdiskUpgradePrice struct {
 
 func (r *DescribeUdiskUpgradePrice) R() UResponse {
 	return &DescribeUdiskUpgradePriceResponse{}
-}
-
-// ---------------- DetachUdisk ------------------
-
-type DetachUdiskResponse struct {
-	BaseResponse
-	UHostId string `json:"omitempty"` // 卸载的UHost实例ID
-	UDiskId string `json:"omitempty"` // 卸载的UDisk实例ID
-
-}
-
-func (r *DetachUdiskResponse) Data() interface{} {
-	return struct {
-		UHostId string
-		UDiskId string
-	}{
-		r.UHostId,
-		r.UDiskId}
-}
-
-type DetachUdisk struct {
-}
-
-func (r *DetachUdisk) R() UResponse {
-	return &DetachUdiskResponse{}
 }
 
 // ---------------- RenameUdisk ------------------
