@@ -2,6 +2,7 @@
 Ucloud API 的 go语言SDK
 
 ![Build Status](https://travis-ci.org/mengzhuo/ucloud-go-sdk.svg)
+[![Godoc Reference](https://godoc.org/github.com/mengzhuo/ucloud-go-sdk?status.png)](https://godoc.org/github.com/mengzhuo/ucloud-go-sdk)
 
 ## 安装
     go get gitcafe.com/mengzhuo/ucloud-go-sdk
