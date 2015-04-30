@@ -1,11 +1,13 @@
 package ucloud
 
 import (
+	"fmt"
 	"testing"
 )
 
 // ---------------- TestAllocateEIP ------------------
 func TestAllocateEIP(t *testing.T) {
+	fmt.Println("UNet....")
 	r := &AllocateEIP{Region: "cn-north-01",
 		OperatorName: "Bgp",
 		Bandwidth:    4,
